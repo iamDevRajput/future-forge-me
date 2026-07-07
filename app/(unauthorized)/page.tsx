@@ -1,0 +1,21 @@
+"use client"
+import React from 'react';
+import HeroSection from "@/components/home/Hero"
+import JourneySection from '@/components/home/Journey';
+import StakeholderSection from '@/components/home/StakeholderSection';
+import ComparisonSection from '@/components/home/ComparisonSection';
+
+export default function FutureForgeLanding() {
+  return (
+    <div className="min-h-screen bg-[#F8FAFC] font-sans antialiased text-[#475569]">
+
+      <HeroSection />
+
+      <JourneySection />
+
+      <StakeholderSection />
+
+      <ComparisonSection />
+    </div>
+  );
+}
