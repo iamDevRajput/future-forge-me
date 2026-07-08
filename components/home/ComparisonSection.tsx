@@ -56,7 +56,7 @@ export default function SplitEcosystemDeck() {
   const [activeTab, setActiveTab] = useState<"problem" | "solution">("solution");
 
   return (
-    <section className="relative overflow-hidden bg-white py-6 md:py-16 font-sans text-slate-800">
+    <section className="relative overflow-hidden bg-white py-6 font-sans text-slate-800">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 relative z-10">
         
         {/* MOBILE ONLY: Tactile Tab Controller */}

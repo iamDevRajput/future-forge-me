@@ -4,6 +4,10 @@ import HeroSection from "@/components/home/Hero"
 import JourneySection from '@/components/home/Journey';
 import StakeholderSection from '@/components/home/StakeholderSection';
 import ComparisonSection from '@/components/home/ComparisonSection';
+import PlatformFeaturesSection from '@/components/home/Features';
+import StakeholderJourneySection from '@/components/home/StakeholderJourney';
+import TrustedSection from '@/components/home/TrustSection';
+import TestimonialsSection from '@/components/home/Testomonial';
 
 export default function FutureForgeLanding() {
   return (
@@ -16,6 +20,14 @@ export default function FutureForgeLanding() {
       <StakeholderSection />
 
       <ComparisonSection />
+
+      <PlatformFeaturesSection />
+
+      <StakeholderJourneySection />
+
+      <TrustedSection />
+
+      <TestimonialsSection />
     </div>
   );
 }

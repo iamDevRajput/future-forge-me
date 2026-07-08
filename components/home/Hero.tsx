@@ -163,31 +163,6 @@ export default function FullyResponsiveHero() {
                         </div>
                     </div>
 
-                    {/* Mobile and Tablet Grid (Fires below 1024px screens seamlessly) */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full lg:hidden mt-4">
-                        {cycleNodes.map((node) => {
-                            const Icon = node.icon;
-                            return (
-                                <div 
-                                    key={`mobile-${node.title}`}
-                                    className="flex items-center gap-4 p-3.5 rounded-xl border border-slate-200 bg-white/95 shadow-md shadow-slate-200/40"
-                                >
-                                    <div className="w-10 h-10 rounded-full border border-slate-100 bg-slate-50 flex items-center justify-center shadow-xs shrink-0 text-[#2563EB]">
-                                        <Icon size={16} strokeWidth={2.5} />
-                                    </div>
-                                    <div className="flex flex-col text-left">
-                                        <span className="text-xs font-black tracking-wider text-[#0F172A] uppercase">
-                                            {node.title}
-                                        </span>
-                                        <span className="text-[11px] text-slate-600 font-semibold mt-0.5 leading-tight">
-                                            {node.desc}
-                                        </span>
-                                    </div>
-                                </div>
-                            );
-                        })}
-                    </div>
-
                 </div>
             </div>
 
