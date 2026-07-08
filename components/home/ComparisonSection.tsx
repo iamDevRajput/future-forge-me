@@ -1,229 +1,212 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { 
-  ArrowRight, 
-  Sparkles, 
   XCircle, 
-  BookOpen,
+  ChevronRight,
+  BookOpen, 
+  UserCheck, 
+  Briefcase, 
+  Users, 
+  Award, 
   TrendingUp,
-  Briefcase,
-  Users,
-  Award,
-  UserCheck
+  Sparkles
 } from "lucide-react";
 
-const comparison = [
+const bottlenecks = [
+  { label: "Learning", sub: "No practical application" },
+  { label: "Skills", sub: "No proof of expertise" },
+  { label: "Certificates", sub: "No real utilization" },
+  { label: "Projects", sub: "No guidance or quality" },
+  { label: "Hiring", sub: "No trust or transparency" },
+];
+
+const solutions = [
   {
     icon: BookOpen,
-    traditional: "Courses end with certificates.",
-    traditionalShort: "Certificates only",
-    futureforge: "Learning continues into projects, mentorship, reviews, portfolio building, and career opportunities.",
-    futureforgeShort: "Continuous career loop",
+    title: "Courses",
+    desc: "Learn from industry experts",
   },
   {
     icon: UserCheck,
-    traditional: "Skills are judged primarily through resumes and interviews.",
-    traditionalShort: "Resume-based",
-    futureforge: "Skills are verified through assessments, real projects, mentor feedback, and professional reviews.",
-    futureforgeShort: "Multi-layer verification",
+    title: "Skill Verification",
+    desc: "Prove what you truly know",
   },
   {
     icon: Briefcase,
-    traditional: "Students build personal or dummy projects with limited real-world exposure.",
-    traditionalShort: "Dummy projects",
-    futureforge: "Work on real client projects with teams, deadlines, mentors, and measurable outcomes.",
-    futureforgeShort: "Real client work",
+    title: "Real Projects",
+    desc: "Build experience that matters",
   },
   {
     icon: Users,
-    traditional: "Mentorship is limited or unavailable after learning.",
-    traditionalShort: "No support",
-    futureforge: "Continuous access to experienced mentors throughout the professional journey.",
-    futureforgeShort: "Lifetime mentorship",
+    title: "Professional Reviews",
+    desc: "Get feedback from industry experts",
   },
   {
     icon: Award,
-    traditional: "Static resume with limited proof of abilities.",
-    traditionalShort: "Static resume",
-    futureforge: "Dynamic verified portfolio showcasing projects, achievements, certifications, reviews, and growth.",
-    futureforgeShort: "Dynamic portfolio",
+    title: "Verified Portfolio",
+    desc: "Showcase your complete journey",
   },
   {
     icon: TrendingUp,
-    traditional: "Recruiters rely heavily on resumes and interviews.",
-    traditionalShort: "Guesswork hiring",
-    futureforge: "Organizations hire using verified skills, project history, mentor reviews, and portfolio credibility.",
-    futureforgeShort: "Verified skill hiring",
+    title: "Career Opportunities",
+    desc: "Connect with right opportunities",
   },
 ];
 
-export default function PerfectedCurtainSlider() {
-  const [sliderPos, setSliderPos] = useState(80);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const isDragging = useRef(false);
-
-  const handleMove = (clientX: number) => {
-    if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    const x = clientX - rect.left;
-    let percentage = (x / rect.width) * 100;
-    
-    if (percentage < 20) percentage = 20;
-    if (percentage > 80) percentage = 80;
-    setSliderPos(percentage);
-  };
-
-  const handleTouchMove = (e: TouchEvent) => {
-    if (!isDragging.current) return;
-    handleMove(e.touches[0].clientX);
-  };
-
-  const handleMouseMove = (e: MouseEvent) => {
-    if (!isDragging.current) return;
-    handleMove(e.clientX);
-  };
-
-  const handleMouseUp = () => {
-    isDragging.current = false;
-    window.removeEventListener("mousemove", handleMouseMove);
-    window.removeEventListener("mouseup", handleMouseUp);
-    window.removeEventListener("touchmove", handleTouchMove);
-    window.removeEventListener("touchend", handleMouseUp);
-  };
-
-  const handleMouseDown = () => {
-    isDragging.current = true;
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mouseup", handleMouseUp);
-    window.addEventListener("touchmove", handleTouchMove);
-    window.addEventListener("touchend", handleMouseUp);
-  };
-
-  const isFutureForgeMinority = sliderPos <= 45;
-  const isTraditionalMinority = sliderPos >= 55;
+export default function SplitEcosystemDeck() {
+  const [activeTab, setActiveTab] = useState<"problem" | "solution">("solution");
 
   return (
-    <section className="relative overflow-hidden bg-white py-8 font-sans text-slate-800 select-none">
-      <div className="mx-auto max-w-4xl px-4 relative z-10">
+    <section className="relative overflow-hidden bg-white py-6 md:py-16 font-sans text-slate-800">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 relative z-10">
         
-        {/* SIDE IDENTIFIERS */}
-        <div className="grid grid-cols-2 gap-4 mb-4 px-2">
-          <div className="text-left">
-            <span className={`text-[10px] font-black uppercase tracking-widest transition-colors duration-300 ${
-              isFutureForgeMinority ? "text-slate-400" : "text-[#2563EB]"
-            }`}>
-              Our Ecosystem
-            </span>
-          </div>
-          <div className="text-right pl-4">
-            <span className={`text-[10px] font-black uppercase tracking-widest transition-colors duration-300 ${
-              isTraditionalMinority ? "text-red-500" : "text-slate-400"
-            }`}>
-              Traditional Model
-            </span>
+        {/* MOBILE ONLY: Tactile Tab Controller */}
+        <div className="flex lg:hidden justify-center mb-5">
+          <div className="inline-flex p-1 rounded-xl bg-slate-100 border border-slate-200 w-full max-w-sm shadow-inner">
+            <button
+              onClick={() => setActiveTab("problem")}
+              className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-black uppercase tracking-wider transition-all duration-200 ${
+                activeTab === "problem"
+                  ? "bg-white text-red-600 shadow-3xs"
+                  : "text-slate-500"
+              }`}
+            >
+              <XCircle size={13} strokeWidth={2.5} />
+              The Problem
+            </button>
+            <button
+              onClick={() => setActiveTab("solution")}
+              className={`flex-1 flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-black uppercase tracking-wider transition-all duration-200 ${
+                activeTab === "solution"
+                  ? "bg-white text-[#2563EB] shadow-3xs"
+                  : "text-slate-500"
+              }`}
+            >
+              <Sparkles size={13} className="text-[#06B6D4]" />
+              The Solution
+            </button>
           </div>
         </div>
 
-        {/* CONTAINER CONSOLE */}
-        <div 
-          ref={containerRef}
-          className="relative bg-slate-50/60 backdrop-blur-xs border border-slate-200/80 rounded-2xl overflow-hidden shadow-xs cursor-ew-resize min-h-[360px] md:min-h-[300px] flex flex-col justify-between p-5"
-        >
-          {/* Subtle Dot-Matrix Tech Grid Overlay */}
-          <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:16px_16px] opacity-70 pointer-events-none" />
+        {/* ECOSYSTEM HOUSING CONTAINER */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 rounded-3xl border border-slate-200 overflow-hidden shadow-sm bg-white items-stretch">
+          
+          {/* ========================================================================= */}
+          {/* LEFT CHASSIS: THE PROBLEM SPACE (Soft Crimson Warning Theme)              */}
+          {/* ========================================================================= */}
+          <div className={`col-span-1 lg:col-span-4 bg-red-100/40 p-6 md:p-8 flex flex-col justify-between relative lg:border-r border-slate-200/80 ${
+            activeTab === "problem" ? "block animate-fadeIn" : "hidden lg:flex"
+          }`}>
+            {/* Minimal error cross-pattern mesh texture underlay */}
+            <div className="absolute inset-0 bg-[radial-gradient(#fee2e2_1.5px,transparent_1.5px)] bg-[size:16px_16px] opacity-70 pointer-events-none" />
+            
+            <div className="relative z-10 space-y-5 my-auto w-full">
+              <div className="hidden lg:block">
+                <div className="w-6 h-0.5 bg-red-500 mb-2 rounded-full" />
+                <h3 className="text-[11px] font-black uppercase tracking-widest text-red-500/80">
+                  The Platform Today
+                </h3>
+              </div>
 
-          <div className="flex-1 flex flex-col justify-between divide-y divide-slate-200/60 h-full relative z-10">
-            {comparison.map((item, idx) => {
-              const TrackIcon = item.icon;
-
-              return (
-                <div 
-                  key={idx} 
-                  className="flex-1 grid items-center py-3 first:pt-0 last:pb-0 gap-4"
-                  style={{
-                    gridTemplateColumns: `${sliderPos}% 1fr`
-                  }}
-                >
-                  {/* LEFT SIDE: FutureForge */}
-                  <div className="overflow-hidden whitespace-nowrap text-ellipsis pr-2 transition-all duration-300">
-                    {isFutureForgeMinority ? (
-                      <div className="inline-flex items-center gap-2 text-[#2563EB] animate-fadeIn">
-                        <div className="p-1 rounded-lg bg-blue-50 border border-blue-100 text-[#2563EB] shrink-0 shadow-3xs">
-                          <TrackIcon size={13} strokeWidth={2.5} />
-                        </div>
-                        <span className="text-[11px] font-bold tracking-tight text-slate-700 whitespace-nowrap">
-                          {item.futureforgeShort}
-                        </span>
-                      </div>
-                    ) : (
-                      <div className="inline-flex items-start gap-2.5 text-slate-900 animate-fadeIn max-w-full">
-                        <div className="p-1 rounded-lg bg-blue-50 border border-blue-100 text-[#2563EB] shrink-0 mt-0.5 shadow-3xs">
-                          <TrackIcon size={13} strokeWidth={2.5} />
-                        </div>
-                        <p className="text-xs font-bold tracking-tight text-left overflow-hidden text-ellipsis whitespace-normal leading-normal text-slate-800">
-                          {item.futureforge}
-                        </p>
-                      </div>
-                    )}
+              {/* Problem Bottlenecks Cards */}
+              <div className="space-y-3.5">
+                {bottlenecks.map((item, idx) => (
+                  <div key={idx} className="flex items-center gap-3 bg-white/90 backdrop-blur-xs border border-red-100/70 p-3 rounded-xl shadow-3xs transition-transform hover:scale-[1.01]">
+                    <XCircle size={16} className="text-red-500 shrink-0" strokeWidth={2.5} />
+                    <div>
+                      <h4 className="text-xs font-bold text-slate-800 tracking-tight leading-none">
+                        {item.label}
+                      </h4>
+                      <p className="text-[10px] text-red-500/80 font-semibold mt-1">
+                        {item.sub}
+                      </p>
+                    </div>
                   </div>
-
-                  {/* RIGHT SIDE: Traditional */}
-                  <div className="overflow-hidden whitespace-nowrap text-ellipsis pl-3 border-l border-slate-200/80">
-                    {isTraditionalMinority ? (
-                      <div className="inline-flex items-center gap-2 text-red-500 animate-fadeIn justify-start">
-                        <div className="p-1 rounded-lg bg-red-50 border border-red-100 text-red-500 shrink-0 shadow-3xs">
-                          <XCircle size={13} strokeWidth={2.5} />
-                        </div>
-                        <span className="text-[11px] font-bold tracking-tight text-slate-500 whitespace-nowrap">
-                          {item.traditionalShort}
-                        </span>
-                      </div>
-                    ) : (
-                      <div className="inline-flex items-start gap-2.5 text-red-500 font-medium italic text-left animate-fadeIn max-w-full">
-                        <XCircle size={13} strokeWidth={2} className="mt-0.5 text-red-400 shrink-0" />
-                        <p className="text-xs tracking-tight leading-normal overflow-hidden text-ellipsis whitespace-normal text-red-400">
-                          {item.traditional}
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          {/* MIDPOINT SLIDER HANDLE */}
-          <div 
-            className="absolute inset-y-0 z-20 w-0.5 bg-gradient-to-b from-[#2563EB] via-[#06B6D4] to-[#2563EB] cursor-ew-resize touch-none"
-            style={{ left: `${sliderPos}%` }}
-            onMouseDown={handleMouseDown}
-            onTouchStart={handleMouseDown}
-          >
-            <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-white border border-slate-300 shadow-md flex items-center justify-center transition-transform active:scale-110 hover:border-[#2563EB]">
-              <div className="flex gap-0.5 items-center justify-center text-slate-400">
-                <span className="w-0.5 h-2.5 bg-slate-300 rounded-full" />
-                <span className="w-0.5 h-3.5 bg-slate-400 rounded-full" />
-                <span className="w-0.5 h-2.5 bg-slate-300 rounded-full" />
+                ))}
               </div>
             </div>
           </div>
 
-        </div>
+          {/* ========================================================================= */}
+          {/* RIGHT CHASSIS: THE SOLUTION SPACE (Clean Blue/Cyan Growth Theme)          */}
+          {/* ========================================================================= */}
+          <div className={`col-span-1 lg:col-span-8 p-6 md:p-10 flex flex-col justify-between relative bg-blue-50/10 overflow-hidden ${
+            activeTab === "solution" ? "block animate-fadeIn" : "hidden lg:flex"
+          }`}>
+            <div className="absolute right-0 top-0 h-48 w-48 bg-[#06B6D4]/20 blur-3xl rounded-full pointer-events-none" />
+            <div className="absolute left-12 bottom-0 h-48 w-48 bg-[#2563EB]/20 blur-3xl rounded-full pointer-events-none" />
+            
+            <div className="relative z-10 my-auto space-y-8 w-full">
+              <div className="hidden lg:block">
+                <h3 className="text-xs font-black uppercase tracking-widest text-[#2563EB] flex items-center gap-1.5">
+                  <Sparkles size={12} className="text-[#06B6D4] animate-pulse" />
+                  The FutureForge Solution
+                </h3>
+              </div>
 
-        {/* BOTTOM ACTION CTA FOOTER */}
-        <div className="mt-5 rounded-xl bg-gradient-to-r from-[#2563EB]/5 to-[#06B6D4]/5 p-4 flex flex-col sm:flex-row gap-4 justify-between items-center border border-slate-200/60 shadow-3xs">
-          <div className="text-center sm:text-left">
-            <h3 className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center justify-center sm:justify-start gap-1.5">
-              <Sparkles size={12} className="text-[#06B6D4]" />
-              Education Alone Isn't Enough Anymore.
-            </h3>
-            <p className="text-[10px] text-slate-500 font-medium mt-0.5 max-w-xl">
-              FutureForge bridges the gap between learning and employment by helping learners build verified skills, experience, and portfolios.
-            </p>
+              {/* DESKTOP HORIZONTAL MAP FLOW */}
+              <div className="hidden lg:grid lg:grid-cols-6 gap-2 relative pt-2">
+                {solutions.map((item, idx) => {
+                  const StepIcon = item.icon;
+                  const isLast = idx === solutions.length - 1;
+
+                  return (
+                    <div key={idx} className="flex flex-col items-center text-center relative group">
+                      {!isLast && (
+                        <div className="absolute left-[calc(50%+24px)] right-[calc(-50%+24px)] top-6 h-0.5 border-t border-dashed border-slate-200 z-0" />
+                      )}
+                      <div className="relative z-10 h-12 w-12 rounded-full bg-white border border-blue-100 text-[#2563EB] flex items-center justify-center shadow-3xs group-hover:bg-[#2563EB] group-hover:text-white transition-all duration-300">
+                        <StepIcon size={16} strokeWidth={2.5} />
+                      </div>
+                      <div className="mt-4 space-y-1 px-1">
+                        <h4 className="text-xs font-black tracking-tight text-slate-800 leading-tight">
+                          {item.title}
+                        </h4>
+                        <p className="text-[10px] leading-relaxed text-slate-400 font-semibold max-w-[105px] mx-auto">
+                          {item.desc}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* MOBILE VERTICAL CHRONO TIMELINE */}
+              <div className="flex lg:hidden flex-col gap-2.5">
+                {solutions.map((item, idx) => {
+                  const StepIcon = item.icon;
+                  const isLast = idx === solutions.length - 1;
+
+                  return (
+                    <div key={idx} className="relative flex items-center gap-3.5 bg-white border border-blue-100/50 p-3 rounded-xl shadow-3xs">
+                      {!isLast && (
+                        <div className="absolute left-[27px] top-11 bottom-[-15px] w-px border-l border-dashed border-slate-200 z-0" />
+                      )}
+                      <div className="relative z-10 h-8 w-8 rounded-full bg-blue-50 border border-blue-100 text-[#2563EB] flex items-center justify-center shadow-3xs shrink-0">
+                        <StepIcon size={13} strokeWidth={2.5} />
+                      </div>
+                      <div>
+                        <h4 className="text-xs font-black tracking-tight text-slate-800 leading-none">
+                          {item.title}
+                        </h4>
+                        <p className="text-[10px] text-slate-400 font-semibold mt-0.5">
+                          {item.desc}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Bottom Anchor Footnote Tab */}
+              <div className="pt-4 border-t border-slate-200/60 flex justify-center">
+                <p className="text-[10px] font-bold text-slate-400 text-center tracking-tight bg-white border border-slate-200 rounded-full px-4 py-1 shadow-3xs">
+                  Bridging the gap between learning and real-world success.
+                </p>
+              </div>
+            </div>
+
           </div>
-          <button className="group flex items-center gap-1.5 rounded-lg bg-[#2563EB] hover:bg-[#1D4ED8] text-white px-4 py-2 text-[11px] font-black uppercase tracking-wider transition-all shadow-xs shrink-0">
-            Get Started
-            <ArrowRight size={11} className="text-cyan-300 transition-transform duration-200 group-hover:translate-x-0.5" strokeWidth={3} />
-          </button>
+
         </div>
 
       </div>
