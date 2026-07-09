@@ -10,7 +10,6 @@ import Benefits from "@/components/project/Benefits";
 import HowItWorks from "@/components/project/HowItWorks";
 import Stats from "@/components/project/Stats";
 import CTA from "@/components/project/CTA";
-import Footer from "@/components/layout/Footer";
 
 export default function ProjectDiscoveryPage() {
   const handleApplyFilters = (filters: any) => {
@@ -47,9 +46,6 @@ export default function ProjectDiscoveryPage() {
 
       {/* SECTION 9 — CTA */}
       <CTA />
-
-      {/* FOOTER */}
-      <Footer />
     </div>
   );
 }
