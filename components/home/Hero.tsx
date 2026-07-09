@@ -42,7 +42,7 @@ export default function FullyResponsiveHero() {
                 className="absolute inset-0 z-0 lg:hidden pointer-events-none opacity-15"
                 style={{ clipPath: "inset(0px)" }}
             >
-                <div className="fixed inset-0 w-full h-full flex items-center justify-center p-4">
+                <div className="absolute inset-0 w-full h-full flex items-center justify-center p-4">
                     <div className="relative w-full h-[70vh] max-w-md md:max-w-lg">
                         <Image 
                             src="/assets/home/heroBackground.png" 
@@ -59,7 +59,7 @@ export default function FullyResponsiveHero() {
             <div className="absolute left-0 top-0 h-96 w-96 md:h-110 md:w-110 xl:h-125 xl:w-125 rounded-full bg-[#2563EB]/20 blur-[100px] xl:blur-[120px] pointer-events-none z-0" />
 
             {/* Smooth Bottom Mask Layer for Flawless Page Blending */}
-            <div className="absolute bottom-0 left-0 right-0 h-28 bg-linear-to-t from-white via-white/80 to-transparent pointer-events-none z-10" />
+            <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none z-10" />
 
             {/* Main Layout Grid Content Shell */}
             <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-12 md:gap-16 px-6 relative z-20 lg:grid-cols-12">
@@ -75,7 +75,7 @@ export default function FullyResponsiveHero() {
                     <h1 className="text-4xl md:text-5xl xl:text-[3.25rem] font-black leading-[1.08] tracking-tight text-[#0F172A]">
                         From Learning <br />
                         to Leadership, <br />
-                        We <span className="text-transparent bg-clip-text bg-linear-to-r from-[#2563EB] to-[#06B6D4]">Forge Futures.</span>
+                        We <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#2563EB] to-[#06B6D4]">Forge Futures.</span>
                     </h1>
 
                     <p className="mt-6 text-sm leading-relaxed text-[#1E293B] lg:text-[#475569] max-w-md font-semibold lg:font-medium drop-shadow-[0_2px_10px_rgba(255,255,255,0.85)] lg:drop-shadow-none">

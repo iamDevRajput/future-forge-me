@@ -184,15 +184,11 @@ export default function StakeholderJourneySection() {
             <ChevronLeft className="w-5 h-5" strokeWidth={2.5} />
           </button>
 
-          <style dangerouslySetInnerHTML={{__html: `
-            .no-raw-bar::-webkit-scrollbar { display: none !important; }
-            .no-raw-bar { -ms-overflow-style: none !important; scrollbar-width: none !important; }
-          `}} />
 
           {/* RE-ENGINEERED CONTAINER MATRIX WIDTH FOR BULLETPROOF HORIZONTAL READABILITY */}
           <div 
             ref={scrollRef}
-            className="flex-1 overflow-x-auto no-raw-bar flex flex-row gap-6 select-none pb-2 scroll-smooth snap-x snap-mandatory"
+            className="flex-1 overflow-x-auto no-raw-bar flex flex-row gap-6 select-none pb-2 scroll-smooth snap-x snap-mandatory [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
           >
             {stakeholders.map((item) => (
               <div

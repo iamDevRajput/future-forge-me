@@ -97,8 +97,8 @@ export default function PlatformFeaturesPipeline() {
         <div className="relative w-full overflow-hidden">
           
           {/* Edge blur fades */}
-          <div className="absolute inset-y-0 left-0 w-8 bg-linear-to-r from-slate-50/60 to-transparent z-20 pointer-events-none" />
-          <div className="absolute inset-y-0 right-0 w-8 bg-linear-to-l from-slate-50/60 to-transparent z-20 pointer-events-none" />
+          <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-slate-50/60 to-transparent z-20 pointer-events-none" />
+          <div className="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-slate-50/60 to-transparent z-20 pointer-events-none" />
 
           <div className="animate-marquee-steady select-none pb-2">
             {duplicatedFeatures.map((item, idx) => {

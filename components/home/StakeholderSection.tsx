@@ -264,7 +264,7 @@ export default function AutomatedStakeholderHub() {
               </button>
               
               {/* Creative status capsule layout shifting context based on selected active variable */}
-              <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-linear-to-b from-blue-500/10 to-transparent border border-blue-100 text-[#2563EB] text-[10px] font-bold uppercase tracking-wider relative overflow-hidden shadow-3xs animate-pulse">
+              <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-gradient-to-b from-blue-500/10 to-transparent border border-blue-100 text-[#2563EB] text-[10px] font-bold uppercase tracking-wider relative overflow-hidden shadow-3xs animate-pulse">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#06B6D4]" />
                 Viewing: <span className="text-slate-900 font-extrabold ml-0.5">{current.title}</span>
               </div>
