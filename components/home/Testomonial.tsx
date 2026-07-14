@@ -82,7 +82,7 @@ export default function TestimonialsSection() {
   };
 
   return (
-    <section className="relative overflow-hidden bg-white py-10 font-sans text-slate-800">
+    <section className="relative overflow-hidden bg-white py-10 md:py-16 font-sans text-slate-800">
       
       {/* Background Ambience Underlay Filters */}
       <div className="absolute left-1/4 top-1/3 h-72 w-72 rounded-full bg-blue-500/5 blur-[100px] pointer-events-none" />
@@ -91,7 +91,7 @@ export default function TestimonialsSection() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 relative z-10">
 
         {/* --- DYNAMIC EXACT MATCH HEADER LAYER --- */}
-        <div className="flex flex-col items-center text-center pb-6 mb-8 select-none">
+        <div className="flex flex-col items-center text-center mb-8 select-none">
           <div className="flex items-center justify-center gap-3 sm:gap-4 w-full">
             <div className="hidden sm:block h-px bg-slate-200 w-12 md:w-20" />
             <h2 className="text-base sm:text-lg md:text-xl font-bold tracking-wider text-slate-900 uppercase whitespace-nowrap">
@@ -145,7 +145,7 @@ export default function TestimonialsSection() {
                   <div>
                     {/* Review Block Quote String */}
                     <p className="text-[11px] sm:text-xs md:text-[13px] leading-normal sm:leading-relaxed text-slate-600 font-medium tracking-tight">
-                      "{item.review}"
+                      &ldquo;{item.review}&rdquo;
                     </p>
                   </div>
 

@@ -1,16 +1,20 @@
-import React from "react";
-import Footer from "@/components/explore/Footer";
+import FeaturedMentorsDashboard from '@/components/mentors/FeaturedMentors'
+import MentorHero from '@/components/mentors/HeroSection'
+import CourseHighLightSection from "@/components/mentors/HighlightSection"
+import MentorFilterSection from '@/components/mentors/MentorFilterSection'
+import MentorshipImpactHub from '@/components/mentors/MentorshipImpact'
+import React from 'react'
 
-export default function MentorsPage() {
+function page() {
   return (
-    <div className="min-h-screen bg-[#FDF9F2] font-sans antialiased flex flex-col">
-      <main className="flex-1 flex items-center justify-center py-24">
-        <div className="text-center">
-          <h1 className="text-4xl font-extrabold text-[#1A1A1A] tracking-tight mb-4">Mentors</h1>
-          <p className="text-lg text-[#6B6B6B]">Connect with industry experts for guidance. Coming soon.</p>
-        </div>
-      </main>
-      <Footer />
+    <div>
+      <MentorHero />
+      <CourseHighLightSection />
+      <MentorFilterSection />
+      <FeaturedMentorsDashboard />
+      <MentorshipImpactHub />
     </div>
-  );
+  )
 }
+
+export default page

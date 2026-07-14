@@ -142,8 +142,8 @@ export default function TestimonialCarousel() {
 
   const maxIndex = Math.max(0, totalSlides - visibleCount);
 
-  // Clamp active index when visible count changes
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setActiveIndex((prev) => Math.min(prev, maxIndex));
   }, [maxIndex]);
 

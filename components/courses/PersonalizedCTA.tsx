@@ -16,7 +16,7 @@ export default function PersonalizedCTA() {
                 Want a Personalized Learning Path?
             </h2>
             <p className="text-slate-400 text-sm font-medium mb-8 max-w-lg relative z-10">
-                Tell us your career goals and current skill level, and we'll craft a customized journey to get you where you want to be.
+                Tell us your career goals and current skill level, and we&apos;ll craft a customized journey to get you where you want to be.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-4 relative z-10">

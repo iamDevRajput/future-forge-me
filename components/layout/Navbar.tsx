@@ -1,121 +1,357 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Sparkles, Menu, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Menu,
+  X,
+  ChevronDown,
+  Home,
+  Compass,
+  GraduationCap,
+  FolderKanban,
+  Users,
+  Building2,
+  Info,
+  BookOpen,
+  Settings,
+  HelpCircle,
+  Bell,
+} from "lucide-react";
+
+/* ------------------------------------------------------------------ */
+/*  Data                                                               */
+/* ------------------------------------------------------------------ */
+
+const navLinks = [
+  { label: "Home", icon: Home, href: "/" },
+  { label: "Explore", icon: Compass, href: "/explore" },
+  { label: "Courses", icon: GraduationCap, href: "/courses" },
+  { label: "Projects", icon: FolderKanban, href: "/projects" },
+  { label: "Mentors", icon: Users, href: "/mentors" },
+  { label: "For Organizations", icon: Building2, href: "/organizations" },
+  { label: "About Us", icon: Info, href: "/about" },
+];
+
+const moreLinks = [
+  { label: "Community", icon: BookOpen, href: "#" },
+  { label: "Notifications", icon: Bell, href: "#" },
+  { label: "Settings", icon: Settings, href: "#" },
+  { label: "Help Center", icon: HelpCircle, href: "#" },
+];
+
+/* ------------------------------------------------------------------ */
+/*  Wing-shaped "F" logo (inline SVG)                                  */
+/* ------------------------------------------------------------------ */
+
+function LogoMark({ className }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 40 40"
+      fill="none"
+      className={className ?? "h-9 w-9"}
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <defs>
+        <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop stopColor="#D9A441" />
+          <stop offset="1" stopColor="#B8791A" />
+        </linearGradient>
+      </defs>
+      {/* F-stem */}
+      <path d="M8 6h4v28H8V6z" fill="url(#goldGrad)" />
+      {/* F-top bar with wing curve */}
+      <path
+        d="M8 6h18a6 6 0 012 4.5c0 3-2.5 5.5-5.5 5.5H8V6z"
+        fill="url(#goldGrad)"
+      />
+      {/* F-middle bar with wing curve */}
+      <path
+        d="M8 20h14a5 5 0 011.5 3.8c0 2.5-2 4.7-4.5 4.7H8V20z"
+        fill="url(#goldGrad)"
+      />
+    </svg>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Active underline indicator                                          */
+/* ------------------------------------------------------------------ */
+
+function ActiveIndicator() {
+  return (
+    <motion.span
+      layoutId="activeNav"
+      className="absolute bottom-0 left-0 right-0 h-[3px] rounded-full bg-gradient-to-r from-[#D9A441] to-[#B8791A]"
+      transition={{ type: "spring", stiffness: 380, damping: 30 }}
+    />
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Desktop "More ▾" dropdown                                          */
+/* ------------------------------------------------------------------ */
+
+function MoreDropdown({
+  open,
+  onClose,
+}: {
+  open: boolean;
+  onClose: () => void;
+}) {
+  return (
+    <AnimatePresence>
+      {open && (
+        <>
+          {/* invisible backdrop so clicking outside closes */}
+          <motion.div
+            className="fixed inset-0 z-40"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+          />
+          <motion.div
+            key="more-dropdown"
+            className="absolute right-0 top-full mt-2 w-52 backdrop-blur-md bg-white/80 border border-white/60 shadow-xl rounded-xl z-50 overflow-hidden"
+            initial={{ opacity: 0, y: -8, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -8, scale: 0.95 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+          >
+            {moreLinks.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                onClick={() => onClose()}
+                className="flex items-center gap-3 px-4 py-2.5 text-sm text-[#1A1A1A] hover:bg-[#C08A1E]/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C08A1E]/50"
+              >
+                <link.icon className="h-4 w-4 text-[#C08A1E]" />
+                {link.label}
+              </a>
+            ))}
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Mobile fullscreen overlay                                           */
+/* ------------------------------------------------------------------ */
+
+function MobileMenu({
+  open,
+  onClose,
+  active,
+  onLinkClick,
+}: {
+  open: boolean;
+  onClose: () => void;
+  active: string;
+  onLinkClick: (label: string) => void;
+}) {
+  return (
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          key="mobile-menu"
+          className="fixed inset-0 z-[100] backdrop-blur-xl bg-[#FDF9F2]/95 flex flex-col items-center justify-center gap-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.25 }}
+        >
+          {/* close */}
+          <button
+            onClick={onClose}
+            aria-label="Close menu"
+            className="absolute top-5 right-6 p-2 rounded-full hover:bg-[#C08A1E]/10 transition-colors focus-visible:ring-2 focus-visible:ring-[#C08A1E]/50"
+          >
+            <X className="h-7 w-7 text-[#1A1A1A]" />
+          </button>
+
+          {/* links */}
+          {[...navLinks, ...moreLinks].map((link, i) => (
+            <Link
+              key={link.label}
+              href={link.href}
+              onClick={() => {
+                onLinkClick(link.label);
+                onClose();
+              }}
+              className={`flex items-center gap-3 text-2xl font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C08A1E]/50 rounded-lg px-4 py-2 ${
+                active === link.label
+                  ? "text-[#C08A1E]"
+                  : "text-[#1A1A1A] hover:text-[#C08A1E]"
+              }`}
+            >
+              <motion.div
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.05 * i, duration: 0.3 }}
+                className="flex items-center gap-3 w-full"
+              >
+                <link.icon className="h-6 w-6" />
+                {link.label}
+              </motion.div>
+            </Link>
+          ))}
+
+          {/* buttons */}
+          <motion.div
+            className="flex gap-3 mt-4"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.35 }}
+          >
+            <Link href="/login" onClick={onClose} className="px-6 py-2.5 rounded-full border-2 border-[#C08A1E] text-[#C08A1E] font-semibold hover:bg-[#C08A1E]/10 transition-colors focus-visible:ring-2 focus-visible:ring-[#C08A1E]/50">
+              Log In
+            </Link>
+            <Link href="/register" onClick={onClose} className="px-6 py-2.5 rounded-full bg-gradient-to-r from-[#D9A441] to-[#B8791A] text-white font-semibold shadow-[0_0_25px_rgba(200,141,30,0.35)] focus-visible:ring-2 focus-visible:ring-[#C08A1E]/50">
+              Get Started
+            </Link>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Main Navbar                                                        */
+/* ------------------------------------------------------------------ */
 
 export default function Navbar() {
-    const pathname = usePathname();
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState("Explore");
+  const [moreOpen, setMoreOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
-    const navLinks = [
-        { name: "Home", href: "/" },
-        { name: "Courses", href: "/courses" },
-        { name: "Projects", href: "/project" },
-        { name: "Mentors", href: "#" },
-        { name: "Organizations", href: "#" },
-    ];
+  /* scroll listener */
+  useEffect(() => {
+    const handler = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handler, { passive: true });
+    return () => window.removeEventListener("scroll", handler);
+  }, []);
 
-    const isActive = (path: string) => pathname === path;
+  /* close mobile menu on resize */
+  useEffect(() => {
+    const handler = () => {
+      if (window.innerWidth >= 768) setMobileOpen(false);
+    };
+    window.addEventListener("resize", handler);
+    return () => window.removeEventListener("resize", handler);
+  }, []);
 
-    return (
-        <nav className="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-md border-b border-slate-200 transition-all font-sans">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex items-center justify-between h-20">
-                    {/* Brand Logo */}
-                    <div className="flex-shrink-0 flex items-center gap-2">
-                        <Link href="/" className="flex items-center gap-2 group">
-                            <div className="h-8 w-8 rounded-xl bg-linear-to-br from-[#2563EB] to-[#06B6D4] flex items-center justify-center shadow-lg shadow-blue-500/20 group-hover:scale-105 transition-transform duration-300">
-                                <Sparkles size={16} className="text-white" strokeWidth={2.5} />
-                            </div>
-                            <span className="text-xl font-black tracking-tight text-[#0F172A]">
-                                FutureForge
-                                <span className="text-[#06B6D4]">.</span>
-                            </span>
-                        </Link>
-                    </div>
+  /* lock body scroll when mobile menu is open */
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
 
-                    {/* Desktop Navigation */}
-                    <div className="hidden lg:flex items-center gap-8">
-                        {navLinks.map((link) => (
-                            <Link 
-                                key={link.name} 
-                                href={link.href} 
-                                className={`text-sm font-bold transition-colors relative group py-2 ${
-                                    isActive(link.href) ? "text-[#2563EB]" : "text-slate-500 hover:text-[#0F172A]"
-                                }`}
-                            >
-                                {link.name}
-                                {/* Active Indicator / Hover Effect */}
-                                <span className={`absolute bottom-0 left-0 h-0.5 bg-[#2563EB] transition-all duration-300 ${
-                                    isActive(link.href) ? "w-full" : "w-0 group-hover:w-full"
-                                }`} />
-                            </Link>
-                        ))}
-                    </div>
+  return (
+    <>
+      <nav
+        className={`sticky top-0 z-50 w-full transition-all duration-300 ${
+          scrolled
+            ? "backdrop-blur-lg bg-white/80 shadow-[0_2px_12px_rgba(0,0,0,0.06)]"
+            : "bg-[#FDF9F2]"
+        }`}
+      >
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+          {/* ---- Logo ---- */}
+          <Link href="/" className="flex items-center gap-2 shrink-0">
+            <LogoMark />
+            <span className="text-lg font-extrabold tracking-tight leading-none">
+              <span className="text-[#1A1A1A]">FUTURE</span>
+              <span className="bg-gradient-to-r from-[#D9A441] to-[#B8791A] bg-clip-text text-transparent">
+                FORGE
+              </span>
+            </span>
+          </Link>
 
-                    {/* Auth Actions */}
-                    <div className="hidden lg:flex items-center gap-4">
-                        <Link 
-                            href="#" 
-                            className="text-sm font-bold text-slate-500 hover:text-[#0F172A] transition-colors px-4 py-2"
-                        >
-                            Log in
-                        </Link>
-                        <Link 
-                            href="#" 
-                            className="px-5 py-2.5 rounded-xl bg-[#0F172A] hover:bg-[#1E293B] text-white text-sm font-bold transition-all shadow-md shadow-slate-900/10 active:scale-95"
-                        >
-                            Sign up
-                        </Link>
-                    </div>
+          {/* ---- Center nav (desktop) ---- */}
+          <div className="hidden lg:flex items-center gap-1">
+            {navLinks.map((link) => (
+              <Link
+                key={link.label}
+                href={link.href}
+                onClick={() => setActive(link.label)}
+                className={`relative px-3 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C08A1E]/50 ${
+                  active === link.label
+                    ? "text-[#C08A1E]"
+                    : "text-[#1A1A1A]/70 hover:text-[#C08A1E]"
+                }`}
+              >
+                {link.label}
+                {active === link.label && <ActiveIndicator />}
+              </Link>
+            ))}
 
-                    {/* Mobile Menu Toggle */}
-                    <div className="lg:hidden flex items-center">
-                        <button 
-                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                            className="p-2 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"
-                        >
-                            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-                        </button>
-                    </div>
-                </div>
+            {/* More dropdown */}
+            <div className="relative">
+              <button
+                onClick={() => setMoreOpen((v) => !v)}
+                className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-[#1A1A1A]/70 hover:text-[#C08A1E] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C08A1E]/50"
+              >
+                More
+                <motion.span
+                  animate={{ rotate: moreOpen ? 180 : 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <ChevronDown className="h-3.5 w-3.5" />
+                </motion.span>
+              </button>
+              <MoreDropdown open={moreOpen} onClose={() => setMoreOpen(false)} />
             </div>
+          </div>
 
-            {/* Mobile Menu Dropdown */}
-            {isMobileMenuOpen && (
-                <div className="lg:hidden absolute top-20 left-0 w-full bg-white border-b border-slate-200 shadow-xl py-4 px-4 flex flex-col gap-2">
-                    {navLinks.map((link) => (
-                        <Link 
-                            key={link.name}
-                            href={link.href}
-                            onClick={() => setIsMobileMenuOpen(false)}
-                            className={`px-4 py-3 rounded-xl text-sm font-bold ${
-                                isActive(link.href) 
-                                    ? "bg-blue-50 text-[#2563EB]" 
-                                    : "text-slate-600 hover:bg-slate-50 hover:text-[#0F172A]"
-                            }`}
-                        >
-                            {link.name}
-                        </Link>
-                    ))}
-                    <div className="border-t border-slate-100 my-2 pt-4 px-4 flex flex-col gap-3">
-                        <Link 
-                            href="#"
-                            className="w-full text-center py-3 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-50 border border-slate-200"
-                        >
-                            Log in
-                        </Link>
-                        <Link 
-                            href="#"
-                            className="w-full text-center py-3 rounded-xl bg-[#0F172A] text-white text-sm font-bold shadow-md"
-                        >
-                            Sign up
-                        </Link>
-                    </div>
-                </div>
-            )}
-        </nav>
-    );
+          {/* ---- Right side ---- */}
+          <div className="flex items-center gap-3">
+            {/* Log In — outline button (visible on sm+) */}
+            <Link href="/login" className="hidden sm:flex px-5 py-2 rounded-full border-2 border-[#C08A1E]/40 text-[#1A1A1A] text-sm font-semibold hover:border-[#C08A1E] hover:text-[#C08A1E] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C08A1E]/50">
+              Log In
+            </Link>
+
+            {/* Get Started — filled gold */}
+            <Link href="/register" className="hidden sm:flex">
+                <motion.div
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="px-5 py-2 rounded-full bg-gradient-to-r from-[#D9A441] to-[#B8791A] text-white text-sm font-semibold shadow-[0_0_25px_rgba(200,141,30,0.35)] hover:shadow-[0_0_30px_rgba(200,141,30,0.45)] transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C08A1E]/50"
+                >
+                  Get Started
+                </motion.div>
+            </Link>
+
+            {/* Hamburger (mobile) */}
+            <button
+              onClick={() => setMobileOpen(true)}
+              aria-label="Open menu"
+              className="lg:hidden p-2 rounded-full hover:bg-[#C08A1E]/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C08A1E]/50"
+            >
+              <Menu className="h-6 w-6 text-[#1A1A1A]" />
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      {/* Mobile overlay */}
+      <MobileMenu
+        open={mobileOpen}
+        onClose={() => setMobileOpen(false)}
+        active={active}
+        onLinkClick={setActive}
+      />
+    </>
+  );
 }

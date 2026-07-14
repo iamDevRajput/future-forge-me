@@ -5,7 +5,7 @@ import { Course } from "@/types/course";
 export default function CourseCard({ course }: { course: Course }) {
     const Icon = course.icon;
     return (
-        <div className="min-w-[280px] sm:min-w-[320px] shrink-0 snap-start bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-xs hover:shadow-md transition-shadow group cursor-pointer flex flex-col">
+        <div className="w-[85vw] max-w-[280px] sm:w-[320px] sm:max-w-none shrink-0 snap-start bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-xs hover:shadow-md transition-shadow group cursor-pointer flex flex-col">
             {/* Thumbnail */}
             <div className="h-40 bg-slate-900 relative p-4 flex flex-col justify-between overflow-hidden">
                 <div className="absolute inset-0 bg-linear-to-br from-[#2563EB]/20 to-transparent pointer-events-none" />

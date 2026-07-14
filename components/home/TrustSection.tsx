@@ -89,7 +89,7 @@ export default function TrustedSection() {
             
             {/* Left Header Group */}
             <div className="flex items-center gap-3 select-none">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-linear-to-b from-[#2563EB]/10 to-transparent border border-[#2563EB]/10">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-b from-[#2563EB]/10 to-transparent border border-[#2563EB]/10">
                 <span className="font-bold text-base text-[#2563EB] tracking-tighter">FF</span>
               </div>
               <div>

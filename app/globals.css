@@ -1,1 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@400;500;600;700;800&display=swap');
+
 @import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", "sans-serif";
+  --font-display: "Sora", "sans-serif";
+}
+
+/* ------------------------------------------------------------------ */
+/*  FutureForge – Aurum Glass Premium UI Tokens                       */
+/* ------------------------------------------------------------------ */
+
+:root {
+  /* Colors */
+  --bg-cream: #FDF9F2;
+  --gold-primary: #C08A1E;
+  --gold-hover: #A6740F;
+  --navy-deep: #0B1220;
+  --navy-card: #101B33;
+  --text-dark: #1A1A1A;
+  --text-muted: #6B6B6B;
+  --border-soft: rgba(192, 138, 30, 0.22);
+  
+  /* Shadows */
+  --shadow-glass-rest: 0 4px 24px rgba(11, 18, 32, 0.06), 0 1px 2px rgba(11, 18, 32, 0.04);
+  --shadow-glass-hover: 0 12px 40px rgba(192, 138, 30, 0.16), 0 2px 8px rgba(11, 18, 32, 0.06);
+  --shadow-neumorphic: 8px 8px 20px rgba(0,0,0,0.06), -8px -8px 20px rgba(255,255,255,0.85);
+  --shadow-gold-glow: 0 0 0 1px rgba(192, 138, 30, 0.15), 0 8px 24px rgba(192, 138, 30, 0.28);
+}
+
+/* Glass Card Recipe */
+.glass-card {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(16px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: var(--shadow-glass-rest);
+  border-radius: 20px;
+  transition: all 0.3s ease-out;
+}
+
+.glass-card:hover {
+  box-shadow: var(--shadow-glass-hover);
+  transform: translateY(-4px);
+  border-color: rgba(192, 138, 30, 0.3); /* subtle gold accent on hover */
+}
+
+/* Neumorphic Card Recipe */
+.neumorphic-card {
+  background: var(--bg-cream);
+  box-shadow: var(--shadow-neumorphic);
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.4);
+}
+
+/* Gold Gradient Utility */
+.bg-gold-gradient {
+  background: linear-gradient(135deg, #E0AC4F 0%, #B8791A 100%);
+}
+.text-gold-gradient {
+  background: linear-gradient(135deg, #E0AC4F 0%, #B8791A 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Base resets */
+html {
+  scroll-behavior: smooth;
+  font-family: var(--font-sans);
+}
+
+/* hide scrollbar on category row */
+[scrollbar-width-none]::-webkit-scrollbar {
+  display: none;
+}

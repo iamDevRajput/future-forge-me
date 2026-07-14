@@ -36,18 +36,18 @@ export default function CoursesHero() {
                         </p>
 
                         {/* Premium Search Bar */}
-                        <div className="mt-10 w-full max-w-2xl flex relative shadow-[0_8px_30px_rgba(37,99,235,0.08)] rounded-full">
-                            <div className="absolute inset-y-0 left-0 pl-6 flex items-center pointer-events-none">
-                                <Search className="h-6 w-6 text-slate-400" />
+                        <div className="mt-8 sm:mt-10 w-full max-w-2xl flex relative shadow-[0_8px_30px_rgba(37,99,235,0.08)] rounded-full">
+                            <div className="absolute inset-y-0 left-0 pl-4 sm:pl-6 flex items-center pointer-events-none">
+                                <Search className="h-5 w-5 sm:h-6 sm:w-6 text-slate-400" />
                             </div>
                             <input
                                 type="text"
-                                className="block w-full pl-16 pr-36 py-5 border border-slate-200 rounded-full bg-white text-base text-slate-800 font-medium focus:ring-4 focus:ring-[#2563EB]/15 focus:border-[#2563EB] outline-none transition-all placeholder:text-slate-400"
-                                placeholder="Search for courses, skills or topics..."
+                                className="block w-full pl-12 pr-24 sm:pl-16 sm:pr-36 py-3.5 sm:py-5 border border-slate-200 rounded-full bg-white text-sm sm:text-base text-slate-800 font-medium focus:ring-4 focus:ring-[#2563EB]/15 focus:border-[#2563EB] outline-none transition-all placeholder:text-slate-400"
+                                placeholder="Search courses, skills..."
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
-                            <button className="absolute right-2 top-2 bottom-2 bg-[#2563EB] hover:bg-blue-700 text-white font-bold py-2 px-8 rounded-full transition-colors shadow-md shadow-blue-600/20 text-sm uppercase tracking-wider">
+                            <button className="absolute right-1.5 sm:right-2 top-1.5 sm:top-2 bottom-1.5 sm:bottom-2 bg-[#2563EB] hover:bg-blue-700 text-white font-bold py-1.5 sm:py-2 px-4 sm:px-8 rounded-full transition-colors shadow-md shadow-blue-600/20 text-xs sm:text-sm uppercase tracking-wider">
                                 Search
                             </button>
                         </div>
