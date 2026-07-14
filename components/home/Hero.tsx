@@ -13,6 +13,7 @@ import {
     TrendingUp
 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 const cycleNodes = [
     { title: "LEARN", desc: "Access quality courses and resources", icon: GraduationCap, pos: "xl:top-[-6%] xl:left-1/2 xl:-translate-x-1/2 lg:top-[-4%] lg:left-1/2 lg:-translate-x-1/2" },
@@ -84,10 +85,10 @@ export default function FullyResponsiveHero() {
 
                     {/* Action Layout Elements */}
                     <div className="mt-8 flex flex-wrap justify-center lg:justify-start gap-4 w-full sm:w-auto">
-                        <button className="group flex items-center justify-center gap-2 w-full sm:w-auto rounded-xl bg-[#4F46E5] hover:bg-[#4338CA] px-7 py-3.5 text-xs font-bold uppercase tracking-wider text-white transition-all shadow-md shadow-indigo-600/10">
+                        <Link href="/register" className="group flex items-center justify-center gap-2 w-full sm:w-auto rounded-xl bg-[#4F46E5] hover:bg-[#4338CA] px-7 py-3.5 text-xs font-bold uppercase tracking-wider text-white transition-all shadow-md shadow-indigo-600/10">
                             Get Started
                             <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 text-indigo-200" />
-                        </button>
+                        </Link>
                         <button className="flex items-center justify-center gap-2 w-full sm:w-auto rounded-xl border border-slate-200 bg-white px-7 py-3.5 text-xs font-bold uppercase tracking-wider text-[#475569] transition-all shadow-sm hover:bg-slate-50">
                             Explore Platform
                             <ArrowUpRight className="h-3.5 w-3.5 text-slate-400" />

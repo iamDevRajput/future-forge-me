@@ -207,12 +207,12 @@ function MobileMenu({
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.35 }}
           >
-            <button className="px-6 py-2.5 rounded-full border-2 border-[#C08A1E] text-[#C08A1E] font-semibold hover:bg-[#C08A1E]/10 transition-colors focus-visible:ring-2 focus-visible:ring-[#C08A1E]/50">
+            <Link href="/login" onClick={onClose} className="px-6 py-2.5 rounded-full border-2 border-[#C08A1E] text-[#C08A1E] font-semibold hover:bg-[#C08A1E]/10 transition-colors focus-visible:ring-2 focus-visible:ring-[#C08A1E]/50">
               Log In
-            </button>
-            <button className="px-6 py-2.5 rounded-full bg-gradient-to-r from-[#D9A441] to-[#B8791A] text-white font-semibold shadow-[0_0_25px_rgba(200,141,30,0.35)] focus-visible:ring-2 focus-visible:ring-[#C08A1E]/50">
+            </Link>
+            <Link href="/register" onClick={onClose} className="px-6 py-2.5 rounded-full bg-gradient-to-r from-[#D9A441] to-[#B8791A] text-white font-semibold shadow-[0_0_25px_rgba(200,141,30,0.35)] focus-visible:ring-2 focus-visible:ring-[#C08A1E]/50">
               Get Started
-            </button>
+            </Link>
           </motion.div>
         </motion.div>
       )}
@@ -318,18 +318,20 @@ export default function Navbar() {
           {/* ---- Right side ---- */}
           <div className="flex items-center gap-3">
             {/* Log In — outline button (visible on sm+) */}
-            <button className="hidden sm:flex px-5 py-2 rounded-full border-2 border-[#C08A1E]/40 text-[#1A1A1A] text-sm font-semibold hover:border-[#C08A1E] hover:text-[#C08A1E] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C08A1E]/50">
+            <Link href="/login" className="hidden sm:flex px-5 py-2 rounded-full border-2 border-[#C08A1E]/40 text-[#1A1A1A] text-sm font-semibold hover:border-[#C08A1E] hover:text-[#C08A1E] transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C08A1E]/50">
               Log In
-            </button>
+            </Link>
 
             {/* Get Started — filled gold */}
-            <motion.button
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              className="hidden sm:flex px-5 py-2 rounded-full bg-gradient-to-r from-[#D9A441] to-[#B8791A] text-white text-sm font-semibold shadow-[0_0_25px_rgba(200,141,30,0.35)] hover:shadow-[0_0_30px_rgba(200,141,30,0.45)] transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C08A1E]/50"
-            >
-              Get Started
-            </motion.button>
+            <Link href="/register" className="hidden sm:flex">
+                <motion.div
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="px-5 py-2 rounded-full bg-gradient-to-r from-[#D9A441] to-[#B8791A] text-white text-sm font-semibold shadow-[0_0_25px_rgba(200,141,30,0.35)] hover:shadow-[0_0_30px_rgba(200,141,30,0.45)] transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C08A1E]/50"
+                >
+                  Get Started
+                </motion.div>
+            </Link>
 
             {/* Hamburger (mobile) */}
             <button
