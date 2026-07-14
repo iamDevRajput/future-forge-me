@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useId } from "react";
 import { AlertCircle, CheckCircle2, Eye, EyeOff } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -15,6 +15,8 @@ export default function AuthInput({ label, error, success, isPassword, className
     const [showPassword, setShowPassword] = useState(false);
     const [capsLockActive, setCapsLockActive] = useState(false);
     const [isFocused, setIsFocused] = useState(false);
+    const generatedId = useId();
+    const inputId = props.id || generatedId;
 
     const inputType = isPassword ? (showPassword ? "text" : "password") : props.type || "text";
 
@@ -37,9 +39,10 @@ export default function AuthInput({ label, error, success, isPassword, className
 
     return (
         <div className={`flex flex-col gap-1.5 ${className}`}>
-            <label className="text-xs font-bold text-[#1A1A1A] ml-1">{label}</label>
+            <label htmlFor={inputId} className="text-xs font-bold text-[#1A1A1A] ml-1">{label}</label>
             <div className="relative group">
                 <input
+                    id={inputId}
                     {...props}
                     type={inputType}
                     onFocus={(e) => {

@@ -106,7 +106,7 @@ export default function RegisterPage() {
                 />
 
                 <div className="flex items-start gap-2 pt-2 pb-1">
-                    <div className="relative flex items-center justify-center shrink-0 mt-0.5">
+                    <label htmlFor="terms" className="relative flex items-center justify-center shrink-0 mt-0.5 cursor-pointer">
                         <input 
                             type="checkbox" 
                             className="peer sr-only" 
@@ -118,7 +118,7 @@ export default function RegisterPage() {
                         <svg className="absolute w-2.5 h-2.5 text-white pointer-events-none opacity-0 peer-checked:opacity-100 transition-opacity" viewBox="0 0 14 10" fill="none">
                             <path d="M1 5L4.5 8.5L13 1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
-                    </div>
+                    </label>
                     <label htmlFor="terms" className="text-xs font-medium text-[#6B6B6B] leading-relaxed cursor-pointer select-none">
                         I agree to the <Link href="/terms" className="text-[#C08A1E] hover:underline">Terms of Service</Link> and <Link href="/privacy" className="text-[#C08A1E] hover:underline">Privacy Policy</Link>.
                     </label>
