@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { ArrowRight, BookOpen, FolderKanban, Star, Award, ClipboardList, Users } from "lucide-react";
 import DashboardCard from "@/components/dashboard/shared/DashboardCard";
 import type { ActivityItem, ActivityType } from "@/types/dashboard";
@@ -30,9 +31,9 @@ export default function RecentActivity({ activity }: { activity: ActivityItem[] 
         <DashboardCard className="p-5 col-span-full lg:col-span-4">
             <div className="flex items-center justify-between mb-4">
                 <h2 className="text-sm font-black text-[#1A1A1A] tracking-tight">Recent Activity</h2>
-                <a href="/dashboard/profile" className="text-xs text-[#C08A1E] font-bold hover:text-[#A6740F] flex items-center gap-1">
+                <Link href="/dashboard/profile" className="text-xs text-[#C08A1E] font-bold hover:text-[#A6740F] flex items-center gap-1">
                     View All <ArrowRight size={12} />
-                </a>
+                </Link>
             </div>
 
             <div className="space-y-1">

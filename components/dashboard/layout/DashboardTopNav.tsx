@@ -157,6 +157,8 @@ export default function DashboardTopNav({
                         onClick={handleNotifToggle}
                         className="relative p-2 rounded-xl text-[#6B6B6B] hover:bg-[rgba(192,138,30,0.08)] transition-colors"
                         aria-label={`Notifications — ${unreadCount} unread`}
+                        aria-expanded={notifOpen}
+                        aria-haspopup="true"
                     >
                         <Bell size={20} />
                         {unreadCount > 0 && (
@@ -171,7 +173,10 @@ export default function DashboardTopNav({
                 </div>
 
                 {/* Avatar */}
-                <button className="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-full hover:bg-[rgba(192,138,30,0.08)] transition-colors">
+                <button 
+                    className="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-full hover:bg-[rgba(192,138,30,0.08)] transition-colors"
+                    aria-label="User profile menu"
+                >
                     <div className="h-8 w-8 rounded-full bg-gradient-to-br from-[#D9A441] to-[#B8791A] flex items-center justify-center text-white font-black text-xs shadow-md">
                         {initials}
                     </div>

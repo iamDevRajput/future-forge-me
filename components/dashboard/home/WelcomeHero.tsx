@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import DashboardCard from "@/components/dashboard/shared/DashboardCard";
 import { StreakBadge } from "@/components/dashboard/shared/Badges";
@@ -11,7 +12,7 @@ function getGreeting() {
     return "Good Evening";
 }
 
-export default function WelcomeHero({ user }: { user: User }) {
+export default function WelcomeHero({ user, progressPercent }: { user: User; progressPercent?: number }) {
     return (
         <DashboardCard className="relative overflow-hidden p-6 col-span-full lg:col-span-6 bg-[#0B1220]">
             {/* Background glow */}
@@ -39,15 +40,15 @@ export default function WelcomeHero({ user }: { user: User }) {
                     {getGreeting()}, {user.name} 👋
                 </h1>
                 <p className="mt-2 text-sm text-white/60 font-medium max-w-[280px]">
-                    You&apos;re {user.xp > 0 ? "78%" : "just starting"} closer to your career goal.
+                    You&apos;re {progressPercent ? `${progressPercent}%` : "just starting"} closer to your career goal.
                 </p>
-                <a
+                <Link
                     href="/dashboard/courses"
                     className="mt-5 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-[#D9A441] to-[#B8791A] text-white text-sm font-bold shadow-[0_0_24px_rgba(200,141,30,0.35)] hover:shadow-[0_0_32px_rgba(200,141,30,0.45)] transition-shadow"
                 >
                     Continue Your Journey
                     <ArrowRight size={15} strokeWidth={2.5} />
-                </a>
+                </Link>
             </div>
         </DashboardCard>
     );

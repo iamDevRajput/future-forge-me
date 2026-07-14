@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { ArrowRight, CheckCircle2, FileText } from "lucide-react";
 import DashboardCard from "@/components/dashboard/shared/DashboardCard";
 import ProgressRing from "@/components/dashboard/shared/ProgressRing";
@@ -9,9 +10,9 @@ export default function PortfolioOverviewWidget({ portfolio }: { portfolio: Port
         <DashboardCard className="p-5 col-span-full lg:col-span-4">
             <div className="flex items-center justify-between mb-4">
                 <h2 className="text-sm font-black text-[#1A1A1A] tracking-tight">Portfolio Overview</h2>
-                <a href="/dashboard/portfolio" className="text-xs text-[#C08A1E] font-bold hover:text-[#A6740F] flex items-center gap-1">
+                <Link href="/dashboard/portfolio" className="text-xs text-[#C08A1E] font-bold hover:text-[#A6740F] flex items-center gap-1">
                     View Portfolio <ArrowRight size={12} />
-                </a>
+                </Link>
             </div>
 
             <div className="flex items-center gap-4 mb-4">
@@ -43,12 +44,12 @@ export default function PortfolioOverviewWidget({ portfolio }: { portfolio: Port
                 ))}
             </div>
 
-            <a
+            <Link
                 href="/dashboard/portfolio"
                 className="flex items-center justify-center gap-1.5 w-full py-2.5 rounded-xl border border-[rgba(192,138,30,0.25)] text-xs font-bold text-[#C08A1E] hover:bg-[rgba(192,138,30,0.06)] transition-colors"
             >
                 Improve Portfolio <ArrowRight size={12} />
-            </a>
+            </Link>
         </DashboardCard>
     );
 }

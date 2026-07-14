@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import DashboardCard from "@/components/dashboard/shared/DashboardCard";
 import ProgressRing from "@/components/dashboard/shared/ProgressRing";
@@ -19,9 +20,9 @@ export default function CareerProgressRing({ progress }: { progress: CareerProgr
                     <h2 className="text-sm font-black text-[#1A1A1A] tracking-tight">Your Career Progress</h2>
                     <p className="text-xs text-[#6B6B6B] mt-0.5 font-medium">Goal: {progress.overallPercent}% achieved</p>
                 </div>
-                <a href="/dashboard/roadmaps" className="text-xs text-[#C08A1E] font-bold hover:text-[#A6740F] flex items-center gap-1">
+                <Link href="/dashboard/roadmaps" className="text-xs text-[#C08A1E] font-bold hover:text-[#A6740F] flex items-center gap-1">
                     Full Progress <ArrowRight size={12} />
-                </a>
+                </Link>
             </div>
 
             <div className="flex flex-col sm:flex-row lg:flex-col items-center gap-4">

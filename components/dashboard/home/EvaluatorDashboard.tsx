@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { ArrowRight, Star, Shield, Users, CheckCircle2 } from "lucide-react";
 import DashboardCard from "@/components/dashboard/shared/DashboardCard";
 import type { EvaluatorStats } from "@/types/dashboard";
@@ -49,12 +50,12 @@ export default function EvaluatorDashboard({ stats }: { stats: EvaluatorStats })
                 ))}
             </div>
 
-            <a
+            <Link
                 href="/dashboard/evaluations"
                 className="flex items-center justify-center gap-1.5 w-full py-2.5 rounded-xl bg-gradient-to-r from-[#D9A441] to-[#B8791A] text-white text-xs font-bold shadow-sm hover:shadow-[0_0_16px_rgba(200,141,30,0.3)] transition-shadow"
             >
                 Go to Evaluation Center <ArrowRight size={12} />
-            </a>
+            </Link>
         </DashboardCard>
     );
 }

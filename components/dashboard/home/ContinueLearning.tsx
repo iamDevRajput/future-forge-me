@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { ArrowRight, Clock, BookOpen } from "lucide-react";
 import DashboardCard from "@/components/dashboard/shared/DashboardCard";
 import ProgressBar from "@/components/dashboard/shared/ProgressBar";
@@ -10,9 +11,9 @@ export default function ContinueLearning({ course }: { course: EnrolledCourse | 
         <DashboardCard className="p-5 col-span-full lg:col-span-4">
             <div className="flex items-center justify-between mb-4">
                 <h2 className="text-sm font-black text-[#1A1A1A] tracking-tight">Continue Learning</h2>
-                <a href="/dashboard/courses" className="text-xs text-[#C08A1E] font-bold hover:text-[#A6740F]">
+                <Link href="/dashboard/courses" className="text-xs text-[#C08A1E] font-bold hover:text-[#A6740F]">
                     My Courses
-                </a>
+                </Link>
             </div>
 
             {!course ? (
@@ -63,12 +64,12 @@ export default function ContinueLearning({ course }: { course: EnrolledCourse | 
                                 <p className="text-xs font-bold text-[#1A1A1A] truncate">{course.nextLesson}</p>
                             </div>
                         </div>
-                        <a
+                        <Link
                             href={`/dashboard/courses/${course.slug}`}
                             className="shrink-0 flex items-center gap-1.5 px-4 py-2 rounded-full bg-gradient-to-r from-[#D9A441] to-[#B8791A] text-white text-xs font-bold shadow-[0_0_16px_rgba(200,141,30,0.25)] hover:shadow-[0_0_24px_rgba(200,141,30,0.35)] transition-shadow"
                         >
                             Continue <ArrowRight size={12} />
-                        </a>
+                        </Link>
                     </div>
                 </>
             )}

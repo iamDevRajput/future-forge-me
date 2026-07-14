@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { ArrowRight, Briefcase, Globe } from "lucide-react";
 import DashboardCard from "@/components/dashboard/shared/DashboardCard";
 import EmptyState from "@/components/dashboard/shared/EmptyState";
@@ -21,9 +22,9 @@ export default function RecommendedOpportunities({ opportunities }: { opportunit
         <DashboardCard className="p-5 col-span-full lg:col-span-4">
             <div className="flex items-center justify-between mb-4">
                 <h2 className="text-sm font-black text-[#1A1A1A] tracking-tight">Recommended Opportunities</h2>
-                <a href="/dashboard/opportunities" className="text-xs text-[#C08A1E] font-bold hover:text-[#A6740F] flex items-center gap-1">
+                <Link href="/dashboard/opportunities" className="text-xs text-[#C08A1E] font-bold hover:text-[#A6740F] flex items-center gap-1">
                     View All <ArrowRight size={12} />
-                </a>
+                </Link>
             </div>
 
             {opportunities.length === 0 ? (

@@ -116,7 +116,9 @@ function NavGroup({ group, isCollapsed }: { group: typeof navGroups[0]; isCollap
             {hasLabel && !isCollapsed && (
                 <button
                     onClick={() => isCollapsible && setIsOpen((v) => !v)}
-                    className={`w-full flex items-center justify-between px-4 py-1.5 mb-0.5 ${isCollapsible ? "cursor-pointer" : "cursor-default"}`}
+                    className={`w-full flex items-center justify-between px-4 py-1.5 mb-0.5 ${isCollapsible ? "cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C08A1E] rounded-md" : "cursor-default"}`}
+                    aria-expanded={isCollapsible ? isOpen : undefined}
+                    aria-label={isCollapsible ? `Toggle ${(group as { label: string }).label} group` : undefined}
                 >
                     <span className="text-[10px] font-bold uppercase tracking-widest text-white/35">
                         {(group as { label: string }).label}

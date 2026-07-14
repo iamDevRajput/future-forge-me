@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 interface EmptyStateProps {
     title: string;
@@ -20,12 +21,12 @@ export default function EmptyState({ title, description, actionLabel, actionHref
             <p className={`font-bold text-[#1A1A1A] ${size === "sm" ? "text-sm" : "text-base"}`}>{title}</p>
             <p className={`mt-1 text-[#6B6B6B] ${size === "sm" ? "text-xs" : "text-sm"} max-w-[220px]`}>{description}</p>
             {actionLabel && actionHref && (
-                <a
+                <Link
                     href={actionHref}
                     className="mt-4 px-4 py-2 rounded-full bg-gradient-to-r from-[#D9A441] to-[#B8791A] text-white text-xs font-bold shadow-[0_0_16px_rgba(200,141,30,0.25)] hover:shadow-[0_0_24px_rgba(200,141,30,0.35)] transition-shadow"
                 >
                     {actionLabel}
-                </a>
+                </Link>
             )}
         </div>
     );

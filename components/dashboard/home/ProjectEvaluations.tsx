@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { ArrowRight, Star, Scale } from "lucide-react";
 import DashboardCard from "@/components/dashboard/shared/DashboardCard";
 import EmptyState from "@/components/dashboard/shared/EmptyState";
@@ -16,9 +17,9 @@ export default function ProjectEvaluations({ evaluations }: { evaluations: Proje
         <DashboardCard className="p-5 col-span-full lg:col-span-4">
             <div className="flex items-center justify-between mb-4">
                 <h2 className="text-sm font-black text-[#1A1A1A] tracking-tight">Project Evaluations</h2>
-                <a href="/dashboard/evaluations" className="text-xs text-[#C08A1E] font-bold hover:text-[#A6740F] flex items-center gap-1">
+                <Link href="/dashboard/evaluations" className="text-xs text-[#C08A1E] font-bold hover:text-[#A6740F] flex items-center gap-1">
                     View All <ArrowRight size={12} />
-                </a>
+                </Link>
             </div>
 
             {evaluations.length === 0 ? (
@@ -66,12 +67,12 @@ export default function ProjectEvaluations({ evaluations }: { evaluations: Proje
                 </div>
             )}
 
-            <a
+            <Link
                 href="/dashboard/evaluations"
                 className="mt-4 flex items-center justify-center gap-1.5 w-full py-2.5 rounded-xl border border-[rgba(192,138,30,0.25)] text-xs font-bold text-[#C08A1E] hover:bg-[rgba(192,138,30,0.06)] transition-colors"
             >
                 Go to Evaluations Center <ArrowRight size={12} />
-            </a>
+            </Link>
         </DashboardCard>
     );
 }

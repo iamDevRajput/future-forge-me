@@ -20,6 +20,8 @@ export default function AImentorFAB() {
                 onClick={() => setIsOpen(true)}
                 className="fixed bottom-20 right-5 lg:bottom-6 lg:right-6 z-50 h-14 w-14 rounded-full bg-gradient-to-br from-[#D9A441] to-[#B8791A] text-white shadow-[0_0_0_4px_rgba(192,138,30,0.2),0_8px_24px_rgba(192,138,30,0.4)] hover:shadow-[0_0_0_6px_rgba(192,138,30,0.25),0_12px_32px_rgba(192,138,30,0.45)] transition-all duration-200 flex items-center justify-center group"
                 aria-label="Open AI Mentor"
+                aria-expanded={isOpen}
+                aria-haspopup="dialog"
             >
                 <Bot size={24} className="group-hover:scale-110 transition-transform" />
             </button>

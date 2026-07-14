@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { ArrowRight, FolderKanban } from "lucide-react";
 import DashboardCard from "@/components/dashboard/shared/DashboardCard";
 import ProgressBar from "@/components/dashboard/shared/ProgressBar";
@@ -17,9 +18,9 @@ export default function ActiveProjects({ projects }: { projects: ActiveProject[]
         <DashboardCard className="p-5 col-span-full lg:col-span-4">
             <div className="flex items-center justify-between mb-4">
                 <h2 className="text-sm font-black text-[#1A1A1A] tracking-tight">Active Projects</h2>
-                <a href="/dashboard/projects" className="text-xs text-[#C08A1E] font-bold hover:text-[#A6740F] flex items-center gap-1">
+                <Link href="/dashboard/projects" className="text-xs text-[#C08A1E] font-bold hover:text-[#A6740F] flex items-center gap-1">
                     View All <ArrowRight size={12} />
-                </a>
+                </Link>
             </div>
 
             {projects.length === 0 ? (
@@ -36,7 +37,7 @@ export default function ActiveProjects({ projects }: { projects: ActiveProject[]
                     {projects.map((project) => {
                         const badge = statusBadge[project.status];
                         return (
-                            <a
+                            <Link
                                 key={project.id}
                                 href={`/dashboard/projects/${project.slug}`}
                                 className="flex gap-3 p-3 bg-[#FDF9F2] rounded-2xl border border-[rgba(192,138,30,0.12)] hover:border-[rgba(192,138,30,0.3)] hover:shadow-sm transition-all group block"
@@ -62,7 +63,7 @@ export default function ActiveProjects({ projects }: { projects: ActiveProject[]
                                         className="mt-2"
                                     />
                                 </div>
-                            </a>
+                            </Link>
                         );
                     })}
                 </div>
