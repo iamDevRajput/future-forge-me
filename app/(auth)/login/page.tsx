@@ -57,7 +57,7 @@ export default function LoginPage() {
                 description="Enter your details to access your FutureForge dashboard." 
             />
 
-            <form onSubmit={handleLogin} className="space-y-4">
+            <form onSubmit={handleLogin} className="space-y-4" autoComplete="off">
                 <AuthInput
                     label="Email Address"
                     type="email"
@@ -65,7 +65,7 @@ export default function LoginPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    autoComplete="email"
+                    autoComplete="off"
                 />
 
                 <div>
@@ -76,7 +76,7 @@ export default function LoginPage() {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
-                        autoComplete="current-password"
+                        autoComplete="new-password"
                     />
                     <div className="flex justify-between items-center mt-2 px-1">
                         <label className="flex items-center gap-2 text-xs font-medium text-[#6B6B6B] cursor-pointer group">
