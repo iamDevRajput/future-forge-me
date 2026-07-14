@@ -1,5 +1,13 @@
-import { redirect } from "next/navigation";
+"use client";
+
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function MentorshipRootPage() {
-  redirect("/mentorship/overview");
+  const router = useRouter();
+  useEffect(() => {
+    router.replace("/mentorship/overview");
+  }, [router]);
+
+  return null;
 }

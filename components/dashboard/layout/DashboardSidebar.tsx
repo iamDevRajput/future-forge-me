@@ -45,7 +45,6 @@ const navGroups = [
         items: [
             { label: "Projects", href: "/dashboard/projects", icon: "FolderKanban" },
             { label: "AI Mentor", href: "/dashboard/ai-mentor", icon: "Bot" },
-            { label: "Mentorship", href: "/mentorship/overview", icon: "GraduationCap" },
             { label: "Opportunities", href: "/dashboard/opportunities", icon: "Briefcase" },
             { label: "Community", href: "/dashboard/community", icon: "Globe" },
         ],
@@ -114,6 +113,79 @@ function NavItem({ label, href, icon, isCollapsed }: {
     );
 }
 
+/* ─── Mentorship Expandable ────────────────────────────────────────────────── */
+const mentorshipSubItems = [
+    { label: "Overview", href: "/mentorship/overview" },
+    { label: "Available Projects", href: "/mentorship/available-projects" },
+    { label: "My Mentorships", href: "/mentorship/my-mentorships" },
+    { label: "Invitations", href: "/mentorship/invitations" },
+];
+
+function MentorshipExpandable({ isCollapsed }: { isCollapsed: boolean }) {
+    const pathname = usePathname();
+    const isAnyActive = mentorshipSubItems.some((i) => pathname.startsWith(i.href));
+    const [isOpen, setIsOpen] = useState(isAnyActive);
+
+    if (isCollapsed) {
+        // In collapsed mode, just show the icon linking to overview with a tooltip
+        const isActive = isAnyActive;
+        return (
+            <Link
+                href="/mentorship/overview"
+                className={`flex items-center justify-center py-2.5 rounded-xl text-sm font-medium transition-all duration-150 group relative mx-2 ${
+                    isActive ? "bg-[rgba(192,138,30,0.18)] text-[#D9A441]" : "text-white/60 hover:bg-white/8 hover:text-white"
+                }`}
+            >
+                <GraduationCap size={18} className={`shrink-0 ${isActive ? "text-[#D9A441]" : "text-white/50 group-hover:text-white"}`} />
+                {isActive && <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 bg-[#D9A441] rounded-r-full" />}
+                <div className="absolute left-full ml-3 px-2.5 py-1.5 bg-[#101B33] text-white text-xs font-bold rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all whitespace-nowrap z-50 border border-white/10 shadow-lg pointer-events-none">
+                    Mentorship
+                </div>
+            </Link>
+        );
+    }
+
+    return (
+        <div className="px-2">
+            {/* Parent row */}
+            <button
+                onClick={() => setIsOpen((v) => !v)}
+                className={`w-full flex items-center justify-between gap-3 py-2.5 px-4 rounded-xl text-sm font-medium transition-all duration-150 ${
+                    isAnyActive ? "bg-[rgba(192,138,30,0.18)] text-[#D9A441]" : "text-white/60 hover:bg-white/8 hover:text-white"
+                }`}
+            >
+                <span className="flex items-center gap-3">
+                    <GraduationCap size={18} className={`shrink-0 ${isAnyActive ? "text-[#D9A441]" : "text-white/50"}`} />
+                    <span className="truncate">Mentorship</span>
+                </span>
+                {isOpen
+                    ? <ChevronDown size={13} className="shrink-0 text-white/40" />
+                    : <ChevronRight size={13} className="shrink-0 text-white/40" />}
+            </button>
+
+            {/* Sub-items */}
+            {isOpen && (
+                <div className="mt-0.5 ml-[34px] space-y-0.5 border-l border-white/10 pl-3">
+                    {mentorshipSubItems.map((sub) => {
+                        const active = pathname === sub.href || pathname.startsWith(sub.href + "/");
+                        return (
+                            <Link
+                                key={sub.href}
+                                href={sub.href}
+                                className={`block py-2 px-2 rounded-lg text-xs font-medium transition-colors ${
+                                    active ? "text-[#D9A441] bg-[rgba(192,138,30,0.12)]" : "text-white/50 hover:text-white hover:bg-white/6"
+                                }`}
+                            >
+                                {sub.label}
+                            </Link>
+                        );
+                    })}
+                </div>
+            )}
+        </div>
+    );
+}
+
 /* ─── Nav Group ─────────────────────────────────────────────────────────────── */
 function NavGroup({ group, isCollapsed }: { group: typeof navGroups[0]; isCollapsed: boolean }) {
     const [isOpen, setIsOpen] = useState((group as { defaultOpen?: boolean }).defaultOpen ?? true);
@@ -142,7 +214,12 @@ function NavGroup({ group, isCollapsed }: { group: typeof navGroups[0]; isCollap
             {(!isCollapsible || isOpen || isCollapsed) && (
                 <div className={`space-y-0.5 ${isCollapsed ? "px-0" : "px-2"}`}>
                     {group.items.map((item) => (
-                        <NavItem key={item.href} {...item} isCollapsed={isCollapsed} />
+                        <React.Fragment key={item.href}>
+                            <NavItem {...item} isCollapsed={isCollapsed} />
+                            {item.label === "AI Mentor" && (
+                                <MentorshipExpandable isCollapsed={isCollapsed} />
+                            )}
+                        </React.Fragment>
                     ))}
                 </div>
             )}
