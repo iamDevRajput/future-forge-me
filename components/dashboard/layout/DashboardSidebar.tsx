@@ -45,7 +45,7 @@ const navGroups = [
         items: [
             { label: "Projects", href: "/dashboard/projects", icon: "FolderKanban" },
             { label: "AI Mentor", href: "/dashboard/ai-mentor", icon: "Bot" },
-            { label: "Mentorship", href: "/dashboard/mentor", icon: "GraduationCap" },
+            { label: "Mentorship", href: "/mentorship/overview", icon: "GraduationCap" },
             { label: "Opportunities", href: "/dashboard/opportunities", icon: "Briefcase" },
             { label: "Community", href: "/dashboard/community", icon: "Globe" },
         ],
