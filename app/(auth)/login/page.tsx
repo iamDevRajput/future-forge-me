@@ -34,22 +34,11 @@ export default function LoginPage() {
 
         // Mock authentication delay
         setTimeout(() => {
-            if (email === "demo@futureforge.com" && password === "demo") {
-                const mockUser: User = {
-                    id: "user_123",
-                    fullName: "Sarah Jenkins",
-                    email: "demo@futureforge.com",
-                    role: "student",
-                    avatar: "https://i.pravatar.cc/150?u=sarah",
-                    xp: 2450,
-                    streak: 12,
-                    onboardingStatus: "completed",
-                    createdAt: new Date().toISOString()
-                };
-                login(mockUser);
+            try {
+                login(email, password);
                 // AuthGuard will automatically redirect to /dashboard
-            } else {
-                setError("Invalid email or password. Try demo@futureforge.com / demo");
+            } catch (err: any) {
+                setError(err.message || "Invalid email or password.");
                 setIsLoading(false);
             }
         }, 1200);

@@ -23,8 +23,8 @@ export interface AuthContextType {
     session: Session;
     isAuthenticated: boolean;
     loading: boolean;
-    login: (user: User) => void;
-    register: (user: User) => void;
+    login: (email: string, password?: string) => void;
+    register: (user: User, password?: string) => void;
     logout: () => void;
     updateProfile: (updates: Partial<User>) => void;
 }

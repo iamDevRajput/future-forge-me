@@ -48,20 +48,24 @@ export default function RegisterPage() {
 
         // Mock authentication delay
         setTimeout(() => {
-            const newUser: User = {
-                id: `user_${Date.now()}`,
-                fullName: name,
-                email: email,
-                role: "student",
-                avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=random`,
-                xp: 0,
-                streak: 0,
-                onboardingStatus: "pending",
-                createdAt: new Date().toISOString()
-            };
-            register(newUser);
-            // AuthGuard will automatically redirect to /dashboard
-            // (or to verify-email if we update AuthGuard in the future)
+            try {
+                const newUser: User = {
+                    id: `user_${Date.now()}`,
+                    fullName: name,
+                    email: email,
+                    role: "student",
+                    avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=random`,
+                    xp: 0,
+                    streak: 0,
+                    onboardingStatus: "pending",
+                    createdAt: new Date().toISOString()
+                };
+                register(newUser, password);
+                // AuthGuard will automatically redirect to /dashboard
+            } catch (err: any) {
+                setError(err.message || "Failed to create account.");
+                setIsLoading(false);
+            }
         }, 1500);
     };
 

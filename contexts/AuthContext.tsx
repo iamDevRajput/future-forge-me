@@ -8,6 +8,18 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const AUTH_STORAGE_KEY = "ff_auth_user";
 const SESSION_STORAGE_KEY = "ff_auth_session";
+const ACCOUNTS_STORAGE_KEY = "ff_auth_accounts";
+
+// Helper for accounts
+const getAccounts = () => {
+    if (typeof window === "undefined") return [];
+    try {
+        const stored = localStorage.getItem(ACCOUNTS_STORAGE_KEY);
+        return stored ? JSON.parse(stored) : [];
+    } catch {
+        return [];
+    }
+};
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
     const router = useRouter();
@@ -67,22 +79,42 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         return () => window.removeEventListener("storage", handleStorageChange);
     }, [router]);
 
-    const login = (user: User) => {
+    const login = (email: string, password?: string) => {
+        const accounts = getAccounts();
+        const account = accounts.find((a: any) => a.email === email && a.password === password);
+        
+        if (!account) {
+            throw new Error("Invalid email or password.");
+        }
+
         const newSession: Session = {
             isAuthenticated: true,
             loginTime: new Date().toISOString(),
             expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days
         };
 
-        setCurrentUser(user);
+        // Omit password from current user session
+        const { password: _, ...user } = account;
+
+        setCurrentUser(user as User);
         setSession(newSession);
 
         localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(user));
         localStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(newSession));
     };
 
-    const register = (user: User) => {
-        login(user);
+    const register = (user: User, password?: string) => {
+        const accounts = getAccounts();
+        if (accounts.some((a: any) => a.email === user.email)) {
+            throw new Error("An account with this email already exists.");
+        }
+
+        // TODO: Replace with backend authentication. Never store plaintext passwords in localStorage in production.
+        const newAccount = { ...user, password };
+        accounts.push(newAccount);
+        localStorage.setItem(ACCOUNTS_STORAGE_KEY, JSON.stringify(accounts));
+        
+        login(user.email, password);
     };
 
     const logout = () => {
