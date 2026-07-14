@@ -59,9 +59,9 @@ const navGroups = [
 ];
 
 /* ─── Logo ──────────────────────────────────────────────────────────────────── */
-function SidebarLogo() {
+function SidebarLogo({ isCollapsed }: { isCollapsed: boolean }) {
     return (
-        <Link href="/" className="flex items-center gap-2.5 px-5 py-5 shrink-0">
+        <Link href="/" className={`flex items-center py-5 shrink-0 transition-all ${isCollapsed ? "justify-center px-0" : "gap-2.5 px-5"}`}>
             <svg viewBox="0 0 40 40" fill="none" className="h-8 w-8">
                 <defs>
                     <linearGradient id="goldGradSidebar" x1="0" y1="0" x2="1" y2="1">
@@ -72,10 +72,12 @@ function SidebarLogo() {
                 <path d="M8 6h18a6 6 0 012 4.5c0 3-2.5 5.5-5.5 5.5H8V6z" fill="url(#goldGradSidebar)" />
                 <path d="M8 20h14a5 5 0 011.5 3.8c0 2.5-2 4.7-4.5 4.7H8V20z" fill="url(#goldGradSidebar)" />
             </svg>
-            <span className="text-base font-extrabold tracking-tight leading-none">
-                <span className="text-white">FUTURE</span>
-                <span className="bg-gradient-to-r from-[#D9A441] to-[#B8791A] bg-clip-text text-transparent">FORGE</span>
-            </span>
+            {!isCollapsed && (
+                <span className="text-base font-extrabold tracking-tight leading-none">
+                    <span className="text-white">FUTURE</span>
+                    <span className="bg-gradient-to-r from-[#D9A441] to-[#B8791A] bg-clip-text text-transparent">FORGE</span>
+                </span>
+            )}
         </Link>
     );
 }
@@ -91,16 +93,22 @@ function NavItem({ label, href, icon, isCollapsed }: {
     return (
         <Link
             href={href}
-            title={isCollapsed ? label : undefined}
-            className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 group relative ${
+            className={`flex items-center gap-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 group relative ${
                 isActive
                     ? "bg-[rgba(192,138,30,0.18)] text-[#D9A441]"
                     : "text-white/60 hover:bg-white/8 hover:text-white"
-            }`}
+            } ${isCollapsed ? "justify-center px-0 mx-2" : "px-4 mx-0"}`}
         >
             <Icon size={18} className={`shrink-0 ${isActive ? "text-[#D9A441]" : "text-white/50 group-hover:text-white"}`} />
             {!isCollapsed && <span className="truncate">{label}</span>}
             {isActive && <span className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 bg-[#D9A441] rounded-r-full" />}
+            
+            {/* Custom Hover Tooltip for collapsed state */}
+            {isCollapsed && (
+                <div className="absolute left-full ml-3 px-2.5 py-1.5 bg-[#101B33] text-white text-xs font-bold rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all whitespace-nowrap z-50 border border-white/10 shadow-lg pointer-events-none">
+                    {label}
+                </div>
+            )}
         </Link>
     );
 }
@@ -130,8 +138,8 @@ function NavGroup({ group, isCollapsed }: { group: typeof navGroups[0]; isCollap
                     )}
                 </button>
             )}
-            {(!isCollapsible || isOpen) && (
-                <div className="space-y-0.5 px-2">
+            {(!isCollapsible || isOpen || isCollapsed) && (
+                <div className={`space-y-0.5 ${isCollapsed ? "px-0" : "px-2"}`}>
                     {group.items.map((item) => (
                         <NavItem key={item.href} {...item} isCollapsed={isCollapsed} />
                     ))}
@@ -147,8 +155,8 @@ function UserCard({ user, isCollapsed }: { user: User; isCollapsed: boolean }) {
     const xpPercent = Math.round((user.xp / user.xpToNextLevel) * 100);
 
     return (
-        <div className="mt-auto border-t border-white/10 pt-3 px-3 pb-4">
-            <div className={`flex items-center gap-3 px-2 py-2 rounded-xl ${isCollapsed ? "justify-center" : ""}`}>
+        <div className={`mt-auto border-t border-white/10 pt-3 pb-4 ${isCollapsed ? "px-2" : "px-3"}`}>
+            <div className={`flex items-center gap-3 py-2 rounded-xl ${isCollapsed ? "justify-center px-0" : "px-2"}`}>
                 <div className="h-9 w-9 shrink-0 rounded-full bg-gradient-to-br from-[#D9A441] to-[#B8791A] flex items-center justify-center text-white font-black text-sm shadow-md">
                     {initials}
                 </div>
@@ -203,7 +211,7 @@ export default function DashboardSidebar({ user }: { user: User }) {
                 `}
                 aria-label="Dashboard navigation"
             >
-                <SidebarLogo />
+                <SidebarLogo isCollapsed={isCollapsed} />
 
                 {/* Nav Items */}
                 <nav className="flex-1 overflow-y-auto overflow-x-hidden py-2 scrollbar-hide">

@@ -4,6 +4,7 @@ import DashboardSidebar from "@/components/dashboard/layout/DashboardSidebar";
 import DashboardTopNav from "@/components/dashboard/layout/DashboardTopNav";
 import BottomNav from "@/components/dashboard/layout/BottomNav";
 import AImentorFAB from "@/components/dashboard/layout/AImentorFAB";
+import DashboardMainWrapper from "@/components/dashboard/layout/DashboardMainWrapper";
 import { mockUser, mockNotifications } from "@/lib/dashboard-mock-data";
 
 export const metadata = {
@@ -19,7 +20,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 <DashboardSidebar user={mockUser} />
 
                 {/* Main column */}
-                <div className="transition-[margin] duration-300 ease-in-out lg:ml-[240px]">
+                <DashboardMainWrapper>
                     {/* Top nav */}
                     <DashboardTopNav user={mockUser} notifications={mockNotifications} />
 
@@ -31,7 +32,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     >
                         {children}
                     </main>
-                </div>
+                </DashboardMainWrapper>
 
                 {/* Mobile bottom navigation */}
                 <BottomNav />
