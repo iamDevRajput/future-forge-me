@@ -3,7 +3,7 @@
 import React from "react";
 import Hero from "@/components/project/Hero";
 import CategorySection from "@/components/project/CategorySection";
-import FilterBar from "@/components/project/FilterBar";
+import FilterBar, { FilterState } from "@/components/project/FilterBar";
 import FeaturedProjects from "@/components/project/FeaturedProjects";
 import OrganizationSection from "@/components/project/OrganizationSection";
 import Benefits from "@/components/project/Benefits";
@@ -12,7 +12,7 @@ import Stats from "@/components/project/Stats";
 import CTA from "@/components/project/CTA";
 
 export default function ProjectDiscoveryPage() {
-  const handleApplyFilters = (filters: any) => {
+  const handleApplyFilters = (filters: FilterState) => {
     console.log("Applying filters:", filters);
   };
 

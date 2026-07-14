@@ -3,7 +3,8 @@
 import React, { useState, useCallback } from "react";
 import { Search, Bell, Zap, Menu, X } from "lucide-react";
 import { useSidebar } from "@/context/SidebarContext";
-import type { User, Notification } from "@/types/dashboard";
+import type { Notification } from "@/types/dashboard";
+import { useAuth } from "@/contexts/AuthContext";
 
 const categoryColors: Record<string, string> = {
     learning: "text-blue-600 bg-blue-50",
@@ -92,19 +93,20 @@ function NotificationPanel({ notifications, onClose }: { notifications: Notifica
 }
 
 export default function DashboardTopNav({
-    user,
     notifications,
 }: {
-    user: User;
     notifications: Notification[];
 }) {
+    const { currentUser } = useAuth();
     const { toggle, openMobile, isExpanded } = useSidebar();
     const [notifOpen, setNotifOpen] = useState(false);
     const [searchOpen, setSearchOpen] = useState(false);
     const unreadCount = notifications.filter((n) => !n.isRead).length;
 
     const handleNotifToggle = useCallback(() => setNotifOpen((v) => !v), []);
-    const initials = user.name.slice(0, 2).toUpperCase();
+    
+    // Safely fallback if currentUser is somehow missing
+    const initials = currentUser?.fullName?.slice(0, 2).toUpperCase() || "FF";
 
     return (
         <header className="h-16 flex items-center justify-between px-4 sm:px-6 bg-[#FDF9F2] border-b border-[rgba(192,138,30,0.12)] sticky top-0 z-30">
@@ -148,7 +150,7 @@ export default function DashboardTopNav({
                 {/* XP flash */}
                 <div className="hidden sm:flex items-center gap-1 bg-gradient-to-r from-[#D9A441] to-[#B8791A] text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-sm">
                     <Zap size={12} className="fill-white" />
-                    {user.xp.toLocaleString()} XP
+                    {currentUser?.xp?.toLocaleString() || 0} XP
                 </div>
 
                 {/* Notifications */}
@@ -181,8 +183,8 @@ export default function DashboardTopNav({
                         {initials}
                     </div>
                     <div className="hidden sm:block text-left">
-                        <p className="text-xs font-bold text-[#1A1A1A] leading-none">{user.name}</p>
-                        <p className="text-[10px] text-[#6B6B6B] leading-none mt-0.5 capitalize">{user.role}</p>
+                        <p className="text-xs font-bold text-[#1A1A1A] leading-none">{currentUser?.fullName || "User"}</p>
+                        <p className="text-[10px] text-[#6B6B6B] leading-none mt-0.5 capitalize">{currentUser?.role || "student"}</p>
                     </div>
                 </button>
             </div>

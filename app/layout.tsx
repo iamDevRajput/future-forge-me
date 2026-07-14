@@ -1,4 +1,5 @@
 import "./globals.css";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 export default function RootLayout({
   children,
@@ -11,7 +12,9 @@ export default function RootLayout({
       className={`h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        {children}
+        <AuthProvider>
+            {children}
+        </AuthProvider>
       </body>
     </html>
   );

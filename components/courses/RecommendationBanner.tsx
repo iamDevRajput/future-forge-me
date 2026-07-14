@@ -14,7 +14,7 @@ export default function RecommendationBanner() {
                 <div>
                     <h3 className="text-lg font-black text-slate-800 tracking-tight">Not sure what to learn?</h3>
                     <p className="text-sm font-medium text-slate-500 mt-1">
-                        Answer a few questions and we'll recommend the best courses for you.
+                        Answer a few questions and we&apos;ll recommend the best courses for you.
                     </p>
                 </div>
             </div>

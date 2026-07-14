@@ -5,7 +5,8 @@ import DashboardTopNav from "@/components/dashboard/layout/DashboardTopNav";
 import BottomNav from "@/components/dashboard/layout/BottomNav";
 import AImentorFAB from "@/components/dashboard/layout/AImentorFAB";
 import DashboardMainWrapper from "@/components/dashboard/layout/DashboardMainWrapper";
-import { mockUser, mockNotifications } from "@/lib/dashboard-mock-data";
+import AuthGuard from "@/components/auth/AuthGuard";
+import { mockNotifications } from "@/lib/dashboard-mock-data";
 
 export const metadata = {
     title: { default: "Dashboard | FutureForge", template: "%s | FutureForge" },
@@ -14,15 +15,16 @@ export const metadata = {
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
     return (
-        <SidebarProvider>
-            <div className="min-h-screen bg-[#F5F0E8] font-sans">
-                {/* Sidebar */}
-                <DashboardSidebar user={mockUser} />
+        <AuthGuard>
+            <SidebarProvider>
+                <div className="min-h-screen bg-[#F5F0E8] font-sans">
+                    {/* Sidebar */}
+                    <DashboardSidebar />
 
-                {/* Main column */}
-                <DashboardMainWrapper>
-                    {/* Top nav */}
-                    <DashboardTopNav user={mockUser} notifications={mockNotifications} />
+                    {/* Main column */}
+                    <DashboardMainWrapper>
+                        {/* Top nav */}
+                        <DashboardTopNav notifications={mockNotifications} />
 
                     {/* Page content */}
                     <main
@@ -40,6 +42,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 {/* AI Mentor FAB — available on every dashboard page */}
                 <AImentorFAB />
             </div>
-        </SidebarProvider>
+            </SidebarProvider>
+        </AuthGuard>
     );
 }

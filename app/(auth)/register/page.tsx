@@ -9,9 +9,13 @@ import AuthInput from "@/components/auth/AuthInput";
 import AuthButton from "@/components/auth/AuthButton";
 import SocialButton from "@/components/auth/SocialButton";
 import PasswordStrength from "@/components/auth/PasswordStrength";
+import AuthGuard from "@/components/auth/AuthGuard";
+import { useAuth } from "@/contexts/AuthContext";
+import { User } from "@/types/auth";
 
 export default function RegisterPage() {
     const router = useRouter();
+    const { register } = useAuth();
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -44,14 +48,27 @@ export default function RegisterPage() {
 
         // Mock authentication delay
         setTimeout(() => {
-            // Mock success routing to email verification
-            router.push("/verify-email");
+            const newUser: User = {
+                id: `user_${Date.now()}`,
+                fullName: name,
+                email: email,
+                role: "student",
+                avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=random`,
+                xp: 0,
+                streak: 0,
+                onboardingStatus: "pending",
+                createdAt: new Date().toISOString()
+            };
+            register(newUser);
+            // AuthGuard will automatically redirect to /dashboard
+            // (or to verify-email if we update AuthGuard in the future)
         }, 1500);
     };
 
     return (
-        <motion.div 
-            initial={{ opacity: 0, y: 10 }}
+        <AuthGuard requireAuth={false}>
+            <motion.div 
+                initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
             className="w-full"
@@ -155,5 +172,6 @@ export default function RegisterPage() {
                 </Link>
             </p>
         </motion.div>
+        </AuthGuard>
     );
 }

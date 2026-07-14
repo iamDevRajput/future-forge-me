@@ -22,7 +22,7 @@ import {
 
 // Types
 interface ServiceItem {
-  icon: any;
+  icon: React.ElementType;
   title: string;
   desc: string;
 }
@@ -31,7 +31,7 @@ interface JourneyStep {
   num: string;
   title: string;
   desc: string;
-  icon: any;
+  icon: React.ElementType;
 }
 
 interface Testimonial {
@@ -241,7 +241,7 @@ export default function MentorshipImpactHub() {
                 {/* Main Quote Copy Text block */}
                 <div className="px-6 text-center">
                   <p className="text-[11px] sm:text-xs font-medium italic text-slate-600 leading-relaxed tracking-tight">
-                    "{testimonials[activeTestimonial].quote}"
+                    &quot;{testimonials[activeTestimonial].quote}&quot;
                   </p>
                 </div>
 

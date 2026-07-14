@@ -1,9 +1,11 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import DashboardCard from "@/components/dashboard/shared/DashboardCard";
 import { StreakBadge } from "@/components/dashboard/shared/Badges";
-import type { User } from "@/types/dashboard";
+import { useAuth } from "@/contexts/AuthContext";
 
 function getGreeting() {
     const h = new Date().getHours();
@@ -12,7 +14,9 @@ function getGreeting() {
     return "Good Evening";
 }
 
-export default function WelcomeHero({ user, progressPercent }: { user: User; progressPercent?: number }) {
+export default function WelcomeHero({ progressPercent }: { progressPercent?: number }) {
+    const { currentUser } = useAuth();
+    
     return (
         <DashboardCard className="relative overflow-hidden p-6 col-span-full lg:col-span-6 bg-[#0B1220]">
             {/* Background glow */}
@@ -34,10 +38,10 @@ export default function WelcomeHero({ user, progressPercent }: { user: User; pro
 
             <div className="relative z-10">
                 <div className="flex items-center gap-2 mb-3">
-                    <StreakBadge days={user.streak} active={user.streak > 0} />
+                    <StreakBadge days={currentUser?.streak || 0} active={(currentUser?.streak || 0) > 0} />
                 </div>
                 <h1 className="text-2xl sm:text-3xl font-black text-white leading-tight">
-                    {getGreeting()}, {user.name} 👋
+                    {getGreeting()}, {currentUser?.fullName || "User"} 👋
                 </h1>
                 <p className="mt-2 text-sm text-white/60 font-medium max-w-[280px]">
                     You&apos;re {progressPercent ? `${progressPercent}%` : "just starting"} closer to your career goal.

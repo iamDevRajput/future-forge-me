@@ -10,7 +10,8 @@ import {
 } from "lucide-react";
 import { useSidebar } from "@/context/SidebarContext";
 import ProgressBar from "@/components/dashboard/shared/ProgressBar";
-import type { User } from "@/types/dashboard";
+import { useAuth } from "@/contexts/AuthContext";
+import { LogOut } from "lucide-react";
 
 /* ─── Icon Map ──────────────────────────────────────────────────────────────── */
 const iconMap: Record<string, React.ElementType> = {
@@ -150,42 +151,70 @@ function NavGroup({ group, isCollapsed }: { group: typeof navGroups[0]; isCollap
 }
 
 /* ─── User Card ─────────────────────────────────────────────────────────────── */
-function UserCard({ user, isCollapsed }: { user: User; isCollapsed: boolean }) {
-    const initials = user.name.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2);
-    const xpPercent = Math.round((user.xp / user.xpToNextLevel) * 100);
+function UserCard({ isCollapsed }: { isCollapsed: boolean }) {
+    const { currentUser, logout } = useAuth();
+    
+    // Safely fallback if currentUser is somehow missing
+    const name = currentUser?.fullName || "User";
+    const initials = name.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2);
+    
+    const xp = currentUser?.xp || 0;
+    const level = Math.floor(xp / 1000) + 1;
+    const xpToNextLevel = 1000 - (xp % 1000);
+    const xpPercent = Math.round(((xp % 1000) / 1000) * 100);
 
     return (
         <div className={`mt-auto border-t border-white/10 pt-3 pb-4 ${isCollapsed ? "px-2" : "px-3"}`}>
-            <div className={`flex items-center gap-3 py-2 rounded-xl ${isCollapsed ? "justify-center px-0" : "px-2"}`}>
+            <div className={`flex items-center gap-3 py-2 rounded-xl group ${isCollapsed ? "justify-center px-0" : "px-2"}`}>
                 <div className="h-9 w-9 shrink-0 rounded-full bg-gradient-to-br from-[#D9A441] to-[#B8791A] flex items-center justify-center text-white font-black text-sm shadow-md">
                     {initials}
                 </div>
                 {!isCollapsed && (
                     <div className="min-w-0 flex-1">
-                        <p className="text-sm font-bold text-white truncate">{user.name}</p>
-                        <p className="text-[10px] text-white/40 truncate">Level {user.level} · {user.levelLabel}</p>
+                        <p className="text-sm font-bold text-white truncate">{name}</p>
+                        <p className="text-[10px] text-white/40 truncate">Level {level} · {currentUser?.role || "Student"}</p>
                     </div>
+                )}
+                {!isCollapsed && (
+                    <button 
+                        onClick={logout}
+                        className="text-white/40 hover:text-red-400 p-1 rounded transition-colors"
+                        title="Logout"
+                    >
+                        <LogOut size={16} />
+                    </button>
                 )}
             </div>
             {!isCollapsed && (
                 <div className="mt-2 px-2">
                     <ProgressBar
                         value={xpPercent}
-                        label={`${user.xp.toLocaleString()} XP`}
+                        label={`${xp.toLocaleString()} XP`}
                         showPercent={false}
                         height="slim"
                         color="bg-gradient-to-r from-[#D9A441] to-[#B8791A]"
                         className="[&_.bg-\[\#F5EDD8\]]:bg-white/15"
                     />
-                    <p className="text-[10px] text-white/30 mt-1 text-right">{user.xpToNextLevel.toLocaleString()} XP to next level</p>
+                    <p className="text-[10px] text-white/30 mt-1 text-right">{xpToNextLevel.toLocaleString()} XP to next level</p>
                 </div>
+            )}
+            
+            {/* Mobile/Collapsed Logout */}
+            {isCollapsed && (
+                <button 
+                    onClick={logout}
+                    className="w-full mt-4 flex items-center justify-center text-white/40 hover:text-red-400 p-2 rounded transition-colors"
+                    title="Logout"
+                >
+                    <LogOut size={18} />
+                </button>
             )}
         </div>
     );
 }
 
 /* ─── Main Sidebar ──────────────────────────────────────────────────────────── */
-export default function DashboardSidebar({ user }: { user: User }) {
+export default function DashboardSidebar() {
     const { isExpanded, isMobileOpen, closeMobile } = useSidebar();
     const isCollapsed = !isExpanded;
 
@@ -225,7 +254,7 @@ export default function DashboardSidebar({ user }: { user: User }) {
                     </div>
                 </nav>
 
-                <UserCard user={user} isCollapsed={isCollapsed} />
+                <UserCard isCollapsed={isCollapsed} />
             </aside>
         </>
     );

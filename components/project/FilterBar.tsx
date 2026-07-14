@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { Filter, RotateCcw, ChevronDown } from "lucide-react";
 
-interface FilterState {
+export interface FilterState {
   projectType: string;
   experienceLevel: string;
   duration: string;

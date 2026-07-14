@@ -8,9 +8,13 @@ import AuthHeader from "@/components/auth/AuthHeader";
 import AuthInput from "@/components/auth/AuthInput";
 import AuthButton from "@/components/auth/AuthButton";
 import SocialButton from "@/components/auth/SocialButton";
+import AuthGuard from "@/components/auth/AuthGuard";
+import { useAuth } from "@/contexts/AuthContext";
+import { User } from "@/types/auth";
 
 export default function LoginPage() {
     const router = useRouter();
+    const { login } = useAuth();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
@@ -31,7 +35,19 @@ export default function LoginPage() {
         // Mock authentication delay
         setTimeout(() => {
             if (email === "demo@futureforge.com" && password === "demo") {
-                router.push("/dashboard");
+                const mockUser: User = {
+                    id: "user_123",
+                    fullName: "Sarah Jenkins",
+                    email: "demo@futureforge.com",
+                    role: "student",
+                    avatar: "https://i.pravatar.cc/150?u=sarah",
+                    xp: 2450,
+                    streak: 12,
+                    onboardingStatus: "completed",
+                    createdAt: new Date().toISOString()
+                };
+                login(mockUser);
+                // AuthGuard will automatically redirect to /dashboard
             } else {
                 setError("Invalid email or password. Try demo@futureforge.com / demo");
                 setIsLoading(false);
@@ -40,8 +56,9 @@ export default function LoginPage() {
     };
 
     return (
-        <motion.div 
-            initial={{ opacity: 0, y: 10 }}
+        <AuthGuard requireAuth={false}>
+            <motion.div 
+                initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
             className="w-full"
@@ -124,5 +141,6 @@ export default function LoginPage() {
                 </Link>
             </p>
         </motion.div>
+        </AuthGuard>
     );
 }
