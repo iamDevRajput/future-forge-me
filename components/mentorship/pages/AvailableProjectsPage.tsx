@@ -143,7 +143,7 @@ export default function AvailableProjectsPage() {
             No projects found
           </p>
           <p className="text-sm text-[#6B7280] mb-6 max-w-[300px] leading-relaxed">
-            We couldn't find any projects matching your current filters. Try adjusting your search or clearing filters to see more options.
+            We couldn&apos;t find any projects matching your current filters. Try adjusting your search or clearing filters to see more options.
           </p>
           <button
             onClick={clearAll}

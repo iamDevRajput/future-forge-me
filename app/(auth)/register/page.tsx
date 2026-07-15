@@ -62,8 +62,9 @@ export default function RegisterPage() {
                 };
                 register(newUser, password);
                 // AuthGuard will automatically redirect to /dashboard
-            } catch (err: any) {
-                setError(err.message || "Failed to create account.");
+            } catch (err: unknown) {
+                const error = err as Error;
+                setError(error.message || "Failed to create account.");
                 setIsLoading(false);
             }
         }, 1500);

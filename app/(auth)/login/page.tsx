@@ -37,8 +37,9 @@ export default function LoginPage() {
             try {
                 login(email, password);
                 // AuthGuard will automatically redirect to /dashboard
-            } catch (err: any) {
-                setError(err.message || "Invalid email or password.");
+            } catch (err: unknown) {
+                const error = err as Error;
+                setError(error.message || "Invalid email or password.");
                 setIsLoading(false);
             }
         }, 1200);

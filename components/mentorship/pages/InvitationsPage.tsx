@@ -48,10 +48,10 @@ export default function InvitationsPage() {
         >
           <EmptyInvitationsIllustration className="mb-6" />
           <p className="text-lg font-bold text-[#1A1A2E] mb-2">
-            You're all caught up
+            You&apos;re all caught up
           </p>
           <p className="text-sm text-[#6B7280] max-w-[300px] mx-auto leading-relaxed">
-            When project teams invite you to mentor, they'll appear here. Ensure your profile is updated to attract the right opportunities.
+            When project teams invite you to mentor, they&apos;ll appear here. Ensure your profile is updated to attract the right opportunities.
           </p>
         </motion.div>
       ) : (

@@ -152,7 +152,7 @@ export default function MentorshipOverview() {
             <div className="bg-white rounded-2xl border border-[#E9EAEE] p-8 text-center flex flex-col items-center justify-center h-[200px]">
               <EmptyInvitationsIllustration className="mb-3" />
               <p className="text-sm font-bold text-[#1A1A2E] mb-1">
-                You're all caught up
+                You&apos;re all caught up
               </p>
               <p className="text-xs text-[#6B7280]">
                 Invitations from project teams will appear here.

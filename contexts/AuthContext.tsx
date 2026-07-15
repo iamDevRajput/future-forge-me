@@ -50,7 +50,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                 if (!isExpired) {
                     // eslint-disable-next-line react-hooks/set-state-in-effect
                     setCurrentUser(parsedUser);
-                    // eslint-disable-next-line react-hooks/set-state-in-effect
                     setSession(parsedSession);
                 } else {
                     localStorage.removeItem(AUTH_STORAGE_KEY);
@@ -81,7 +80,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     const login = (email: string, password?: string) => {
         const accounts = getAccounts();
-        const account = accounts.find((a: any) => a.email === email && a.password === password);
+        const account = accounts.find((a: User & { password?: string }) => a.email === email && a.password === password);
         
         if (!account) {
             throw new Error("Invalid email or password.");
@@ -94,7 +93,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         };
 
         // Omit password from current user session
-        const { password: _, ...user } = account;
+        const user = { ...account };
+        delete user.password;
 
         setCurrentUser(user as User);
         setSession(newSession);
@@ -105,7 +105,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     const register = (user: User, password?: string) => {
         const accounts = getAccounts();
-        if (accounts.some((a: any) => a.email === user.email)) {
+        if (accounts.some((a: User & { password?: string }) => a.email === user.email)) {
             throw new Error("An account with this email already exists.");
         }
 
